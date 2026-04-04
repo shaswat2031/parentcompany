@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "./components/Navbar";
 
 // Custom Hook for Scroll Reveal
 function useReveal() {
@@ -36,7 +37,7 @@ function SplitText({ text, startDelay = 0 }) {
           className={`split-letter inline-block ${i === 0 ? "mr-1" : ""} visible transition-all`}
           style={{ 
             transitionDelay: `${startDelay + i * 60}ms`,
-            transform: `translateY(0)` // In a real production file, I'd use CSS classes for the entry, but I'll implement the entry state in the component
+            transform: `translateY(0)`
           }}
         >
           {char === " " ? "\u00A0" : char}
@@ -70,6 +71,8 @@ export default function Home() {
   const visionSection = useReveal();
   const companiesSection = useReveal();
   
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   // Custom Cursor State
   useEffect(() => {
     const dot = document.querySelector(".cursor-dot");
@@ -87,93 +90,82 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative selection:bg-gold selection:text-dark">
+    <div className="relative selection:bg-gold selection:text-dark overflow-x-hidden">
       {/* Visual Enhancements */}
       <div className="grain-overlay" />
       <div className="cursor-dot hidden md:block" />
       <div className="cursor-outline hidden md:block" />
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-sm bg-dark/20 transition-all duration-500 hover:bg-dark/40">
-          <div className="font-industrial text-2xl tracking-[0.2em] text-gold pointer-events-none">ELYSIAN</div>
-          <div className="flex gap-12 font-body text-[10px] uppercase tracking-[0.4em] font-semibold">
-              <Link href="/companies" className="hover:text-gold transition-colors">Portfolios</Link>
-              <Link href="/operations" className="hover:text-gold transition-colors">Presence</Link>
-              <Link href="/leadership" className="hover:text-gold transition-colors">Governance</Link>
-          </div>
-          <Link href="/invest" className="border border-gold/40 px-6 py-2 text-[10px] uppercase tracking-[0.2em] hover:bg-gold hover:text-dark transition-all duration-300">
-              Investor Portal
-          </Link>
-      </nav>
+      <Navbar />
 
       <main className="animate-page-in">
         {/* 1. HERO */}
-        <section className="h-screen flex flex-col justify-center px-8 md:px-24 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-gold/5 via-gold/0 to-transparent pointer-events-none" />
+        <section className="h-screen flex flex-col justify-center px-6 md:px-24 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-gradient-to-l from-gold/5 via-gold/0 to-transparent pointer-events-none" />
           
           <div className="relative z-10 max-w-7xl">
-              <span className="inline-block font-body text-xs uppercase tracking-[0.5em] text-gold mb-8 opacity-0 animate-in fade-in slide-in-from-left duration-1000 fill-mode-forwards">
+              <span className="inline-block font-body text-[10px] md:text-xs uppercase tracking-[0.5em] text-gold mb-8 opacity-0 animate-in fade-in slide-in-from-left duration-1000 fill-mode-forwards">
                   Est. 1952 · Global Conglomerate
               </span>
-              <h1 className="font-headline italic text-7xl md:text-[10rem] leading-[1.1] text-glacier flex flex-col items-start gap-0 mb-12 drop-shadow-2xl">
+              <h1 className="font-headline italic text-[11vw] sm:text-6xl md:text-8xl lg:text-[10rem] leading-[1.1] text-glacier flex flex-col items-start gap-2 mb-12 drop-shadow-2xl">
                   <span className="flex overflow-hidden">
                     <SplitText text="One Vision." startDelay={200} />
                   </span>
-                  <span className="flex overflow-hidden md:pl-[20vw]">
+                  <span className="flex overflow-hidden pl-[15vw]">
                     <SplitText text="Four Kingdoms." startDelay={800} />
                   </span>
               </h1>
-              <p className="font-body text-lg md:text-2xl text-glacier/60 max-w-xl md:pl-[20vw] leading-relaxed italic border-l-2 border-gold/30 pl-8 ml-[20vw] animate-in fade-in duration-1000 delay-1000 fill-mode-forwards opacity-0">
+              <p className="font-body text-base md:text-xl lg:text-2xl text-glacier/60 max-w-xl pl-[15vw] leading-relaxed italic border-l-2 border-gold/30 md:ml-[15vw] animate-in fade-in duration-1000 delay-1000 fill-mode-forwards opacity-0">
                   Architecting the future through disciplined stewardship and a relentless pursuit of industrial excellence.
               </p>
           </div>
 
-          <div className="absolute bottom-12 left-8 md:left-24 font-industrial text-[5rem] md:text-[15rem] leading-none opacity-5 text-gold select-none pointer-events-none uppercase">
-              ELYSIAN GROUP
+          <div className="absolute bottom-12 left-0 w-full md:left-24 md:w-auto text-center md:text-left font-industrial text-[14vw] md:text-[8rem] lg:text-[15rem] leading-none opacity-10 text-gold-premium select-none pointer-events-none uppercase">
+              RISEMATE VENTURE
           </div>
 
-          <div className="absolute bottom-12 right-12 flex flex-col items-center gap-4">
+          <div className="absolute bottom-12 right-6 md:right-12 hidden md:flex flex-col items-center gap-4">
               <div className="w-px h-24 bg-gradient-to-b from-gold via-gold to-transparent opacity-50 animate-pulse" />
               <span className="font-industrial text-xs tracking-widest text-gold rotate-90 translate-y-8 uppercase">Scroll</span>
           </div>
         </section>
 
-        {/* 2. ABOUT THE GROUP (Asymmetric split) */}
-        <section ref={aboutSection.ref} className="py-32 md:py-64 px-8 md:px-24 flex flex-col md:flex-row items-center gap-24 relative overflow-visible">
-            <div className={`md:w-3/5 transition-all duration-1000 ease-out ${aboutSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
+        {/* 2. ABOUT THE GROUP */}
+        <section ref={aboutSection.ref} className="py-24 md:py-64 px-6 md:px-24 flex flex-col lg:flex-row items-center gap-24 relative overflow-visible">
+            <div className={`w-full lg:w-3/5 transition-all duration-1000 ease-out ${aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}`}>
                 <h2 className="font-headline font-light italic text-4xl md:text-7xl mb-12 leading-tight">
                     A singular standard of excellence across the global industrial landscape.
                 </h2>
                 <div className="gold-rule w-1/3 mb-12 !justify-start" />
-                <p className="font-body text-xl text-glacier/80 leading-relaxed max-w-2xl">
+                <p className="font-body text-lg md:text-xl text-glacier/80 leading-relaxed max-w-2xl">
                     We integrate design excellence with operational efficiency in every sector we touch. 
                     From high-frequency biotech and renewable energy grids to the structural integrity 
                     of the world's most ambitious megaprojects, our mission is to build what lasts. 
-                    Our legacy is forged in the synergy between innovation and traditional craftsmanship.
                 </p>
             </div>
             
-            <div className={`md:w-2/5 flex flex-col gap-12 border-l border-gold/10 pl-12 transition-all duration-1000 delay-500 ease-out ${aboutSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
+            <div className={`w-full lg:w-2/5 grid grid-cols-2 lg:flex lg:flex-col gap-12 lg:border-l lg:border-gold/10 lg:pl-12 transition-all duration-1000 delay-500 ease-out ${aboutSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
                 <div className="group">
-                    <span className="font-industrial text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
+                    <span className="font-industrial text-4xl md:text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
                         {useCounter(4, 0, 2000, aboutSection.isVisible)}
                     </span>
                     <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">Companies</span>
                 </div>
                 <div className="group">
-                    <span className="font-industrial text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
+                    <span className="font-industrial text-4xl md:text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
                         {useCounter(18, 0, 2000, aboutSection.isVisible)}
                     </span>
                     <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">Countries</span>
                 </div>
-                 <div className="group">
-                    <span className="font-industrial text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
+                <div className="group">
+                    <span className="font-industrial text-4xl md:text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
                         $2.4B+
                     </span>
                     <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">Asset Value</span>
                 </div>
-                 <div className="group">
-                    <span className="font-industrial text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
+                <div className="group">
+                    <span className="font-industrial text-4xl md:text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
                         {useCounter(1200, 0, 2000, aboutSection.isVisible)}
                     </span>
                     <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">Team</span>
@@ -181,84 +173,85 @@ export default function Home() {
             </div>
         </section>
 
-        {/* 3. OUR COMPANIES (Non-grid layout) */}
-        <section ref={companiesSection.ref} className="py-32 px-8 md:px-24 bg-dark/40 relative">
-            <h3 className="font-industrial text-xs tracking-[0.5em] text-gold mb-32 uppercase text-center md:text-left">The Portfolio Spread</h3>
+        {/* 3. OUR COMPANIES */}
+        <section ref={companiesSection.ref} className="py-24 md:py-32 px-6 md:px-24 bg-dark/40 relative">
+            <h3 className="font-industrial text-xs tracking-[0.5em] text-gold mb-16 md:mb-32 uppercase text-center md:text-left">The Portfolio Spread</h3>
             
-            <div className="relative min-h-[1200px] md:min-h-[1600px] w-full">
-                {/* Bworth - Top Left */}
-                <div className={`absolute top-0 left-0 md:w-1/2 perspective-card transition-all duration-1000 ${companiesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                    <div className="perspective-card-inner group p-12 bg-white/5 border border-white/5 hover:border-gold/30 hover:bg-white/[0.08] transition-all rounded-sm flex flex-col gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-32 relative lg:min-h-[1700px]">
+                {/* Bworth */}
+                <div className={`md:col-span-12 lg:absolute lg:top-0 lg:left-0 lg:w-1/2 perspective-card transition-all duration-1000 ${companiesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+                    <div className="perspective-card-inner group p-8 md:p-12 bg-white/5 border border-white/5 hover:border-gold/30 hover:bg-white/[0.08] transition-all rounded-sm flex flex-col gap-8">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-gold/10 rounded-sm flex items-center justify-center text-gold">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 rounded-sm flex items-center justify-center text-gold">
                                 <span className="material-symbols-outlined">payments</span>
                             </div>
-                            <div className="font-industrial text-lg tracking-widest text-glacier/30">FINANCE / REAL ESTATE</div>
+                            <div className="font-industrial text-sm md:text-lg tracking-widest text-glacier/30">APPAREL / LIFESTYLE</div>
                         </div>
-                        <h4 className="font-headline text-5xl italic text-gold">Bworth</h4>
-                        <p className="font-body text-glacier/60 italic text-lg leading-relaxed">
-                            Pioneering luxury residential and commercial spaces that blend high-concept architecture with tactical finance.
+                        <h4 className="font-headline text-4xl md:text-5xl italic text-gold">Bworth</h4>
+                        <p className="font-body text-glacier/60 italic text-base md:text-lg leading-relaxed">
+                            Distinctive apparel for the modern visionary. Crafting premium garments that embody the RiseMate aesthetic of industrial elegance.
                         </p>
-                        <Link href="/companies" className="opacity-0 group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500">
+                        <Link href="/companies" className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500">
                            Explore Asset → 
                         </Link>
                     </div>
                 </div>
 
-                {/* VegaVrudhi - Center Right */}
-                <div className={`absolute top-[400px] md:top-[300px] right-0 md:w-5/12 perspective-card transition-all duration-1000 delay-300 ${companiesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                    <div className="perspective-card-inner group p-12 bg-[#0A0E0A] border border-gold/10 hover:border-gold/60 hover:shadow-[0_0_50px_rgba(201,168,76,0.1)] transition-all rounded-sm flex flex-col gap-8">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-gold/20 rounded-sm flex items-center justify-center text-gold">
-                                <span className="material-symbols-outlined">nature</span>
+                {/* Synchronous */}
+                <div className={`md:col-span-12 lg:absolute lg:top-[250px] lg:right-0 lg:w-5/12 perspective-card transition-all duration-1000 delay-700 ${companiesSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-40'}`}>
+                    <div className="perspective-card-inner group p-8 md:p-12 h-full bg-gold/10 border border-gold/40 hover:bg-gold/20 transition-all rounded-sm flex flex-col gap-8 lg:justify-center backdrop-blur-md">
+                         <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/30 rounded-sm flex items-center justify-center text-gold">
+                                <span className="material-symbols-outlined">campaign</span>
                             </div>
-                            <div className="font-industrial text-lg tracking-widest text-glacier/30 text-emerald-900/40">SUSTAINABILITY</div>
+                            <div className="font-industrial text-sm md:text-lg tracking-widest text-glacier/30">DIGITAL MARKETING</div>
                         </div>
-                        <h4 className="font-headline text-5xl italic text-glacier">VegaVrudhi</h4>
-                        <p className="font-body text-glacier/60 italic text-lg leading-relaxed">
-                            Bridging the gap between primitive growth and industrial scaling through regenerative biospheres.
-                        </p>
-                         <Link href="/companies" className="opacity-0 group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500">
+                        <div>
+                            <h4 className="font-headline text-4xl md:text-5xl italic text-glacier leading-tight mb-4">Synchronous</h4>
+                            <p className="font-body text-glacier/80 italic text-base md:text-lg leading-relaxed">
+                                Strategy. Websites. Growth. We build your brand through high-speed digital tools and expert marketing.
+                            </p>
+                        </div>
+                         <Link href="/companies" className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500 lg:mt-auto">
                            Explore Growth → 
                         </Link>
                     </div>
                 </div>
 
-                {/* RYM - Bottom Left */}
-                <div className={`absolute top-[800px] md:top-[700px] left-[5%] md:w-4/12 perspective-card transition-all duration-1000 delay-500 ${companiesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                    <div className="perspective-card-inner group p-12 bg-white/5 border border-white/5 hover:border-gold/30 transition-all rounded-sm flex flex-col gap-8">
-                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-gold/10 rounded-sm flex items-center justify-center text-gold">
-                                <span className="material-symbols-outlined">developer_mode</span>
+                {/* VegaVrudhi */}
+                <div className={`md:col-span-12 lg:absolute lg:top-[650px] lg:left-[5%] lg:w-5/12 perspective-card transition-all duration-1000 delay-300 ${companiesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+                    <div className="perspective-card-inner group p-8 md:p-12 bg-[#0A0E0A] border border-gold/10 hover:border-gold/60 hover:shadow-[0_0_50px_rgba(201,168,76,0.1)] transition-all rounded-sm flex flex-col gap-8">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/20 rounded-sm flex items-center justify-center text-gold">
+                                <span className="material-symbols-outlined">nature</span>
                             </div>
-                            <div className="font-industrial text-lg tracking-widest text-glacier/30">SaaS / TECH</div>
+                            <div className="font-industrial text-sm md:text-lg tracking-widest text-glacier/30">SALES & STAFFING</div>
                         </div>
-                        <h4 className="font-headline text-5xl italic text-glacier">RYM</h4>
-                        <p className="font-body text-glacier/60 italic text-lg leading-relaxed">
-                            Developing next-generation infrastructure and enterprise-grade software systems for global markets.
+                        <h4 className="font-headline text-4xl md:text-5xl italic text-glacier">VegaVrudhi</h4>
+                        <p className="font-body text-glacier/60 italic text-base md:text-lg leading-relaxed">
+                            Real Growth. End-to-end sales, expert staffing, and high-velocity customer engagement solutions for the modern enterprise.
                         </p>
-                         <Link href="/companies" className="opacity-0 group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500">
-                           Explore Core → 
+                         <Link href="/companies" className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500">
+                           Explore Growth → 
                         </Link>
                     </div>
                 </div>
 
-                {/* Synchronous - Far Right Tall */}
-                <div className={`absolute top-[1000px] md:top-[200px] right-[10%] md:right-[-5%] md:w-3/12 h-[600px] perspective-card transition-all duration-1000 delay-700 ${companiesSection.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-40'}`}>
-                    <div className="perspective-card-inner group p-12 h-full bg-gold/10 border border-gold/40 hover:bg-gold/20 transition-all rounded-sm flex flex-col gap-12 justify-center backdrop-blur-md">
+                {/* RYM */}
+                <div className={`md:col-span-12 lg:absolute lg:top-[1100px] lg:right-[5%] lg:w-5/12 perspective-card transition-all duration-1000 delay-500 ${companiesSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+                    <div className="perspective-card-inner group p-8 md:p-12 bg-white/5 border border-white/5 hover:border-gold/30 transition-all rounded-sm flex flex-col gap-8">
                          <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-gold/30 rounded-sm flex items-center justify-center text-gold">
-                                <span className="material-symbols-outlined">architecture</span>
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/10 rounded-sm flex items-center justify-center text-gold">
+                                <span className="material-symbols-outlined">developer_mode</span>
                             </div>
+                            <div className="font-industrial text-sm md:text-lg tracking-widest text-glacier/30">AI SAAS / DEEP LEARNING</div>
                         </div>
-                        <div>
-                            <h4 className="font-headline text-5xl italic text-glacier leading-tight mb-4">Synchronous Digital Build</h4>
-                            <p className="font-body text-glacier/80 italic text-lg leading-relaxed">
-                                Construction at the speed of computation. Where architecture meets digital twinning.
-                            </p>
-                        </div>
-                         <Link href="/companies" className="opacity-0 group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500 mt-auto">
-                           Explore Site → 
+                        <h4 className="font-headline text-4xl md:text-5xl italic text-glacier">RYM</h4>
+                        <p className="font-body text-glacier/60 italic text-base md:text-lg leading-relaxed">
+                            Neural infrastructure for the 21st century. Building sovereign AI SaaS and deep learning systems that redefine computation.
+                        </p>
+                         <Link href="/companies" className="opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gold font-body text-xs uppercase tracking-[0.4em] transition-all duration-500">
+                           Explore Core → 
                         </Link>
                     </div>
                 </div>
@@ -274,50 +267,68 @@ export default function Home() {
                 </div>
                 
                 <div className="flex gap-12 md:gap-24 overflow-x-auto pb-12 snap-x scrollbar-none px-4">
-                    {/* Founder 1 */}
+                    {/* Founder 1 - Dheeraj Anand */}
                     <div className="snap-center shrink-0 w-80 perspective-card group cursor-pointer">
-                        <div className="perspective-card-inner relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
+                        <Link href="https://bworth.co.in/" target="_blank" className="perspective-card-inner block relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
                              <div className="w-24 h-24 rounded-full border-2 border-gold/30 p-1 mb-8">
-                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-700">
-                                     <Image src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7i6dBAXpca1hYgt0M0PmONofEd-DdBlkcOA4Z6AWJlBtgjG9KV75wfl1SjcUOh1EJA6oI_ib7pRx0ikt_igVBvLj3y5mS-23ovMpk3Rf8mIz5jeDQxoOVzHhxMeAnXiARWzKr8M1lK0WDtT1ikp72yfDBwucu2kj8lCQkFoDEAEHz8luwr8_ArqpaqyYz915mniOwdIIBr_Tr09rwTHbN0u8PO38Gy1c1rSCUywgxuUGPvd1SHzXm_W6Rtu6JnJhjAqgn4VvXNvMa" fill className="object-cover" alt="CEO" />
+                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative flex items-center justify-center">
+                                     <span className="material-symbols-outlined text-gold/40 text-4xl">person</span>
                                  </div>
-                             </div>
-                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Julian Thorne</h5>
-                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">CHAIRMAN · ELYSIAN</p>
+                              </div>
+                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Dheeraj Anand</h5>
+                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">FOUNDER · Bworth</p>
                              <p className="font-body text-xs italic text-glacier/40 group-hover:text-glacier/80 transition-opacity translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 duration-500">
-                                "INTEGRITY IN EVERY BEAM, VALUE IN EVERY LEDGER."
+                                "DEFINING THE INDUSTRIAL AESTHETIC."
                              </p>
-                        </div>
+                        </Link>
                     </div>
-                     {/* Founder 2 */}
+
+                    {/* Founder 2 - Devam Srivastava */}
                     <div className="snap-center shrink-0 w-80 perspective-card group cursor-pointer mt-12">
-                        <div className="perspective-card-inner relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
+                        <Link href="https://www.synchronousbuilddigital.com/" target="_blank" className="perspective-card-inner block relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
                              <div className="w-24 h-24 rounded-full border-2 border-gold/30 p-1 mb-8">
-                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-700">
-                                     <Image src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy1bFBbWTz_9m28FHzGbj0siJiWG-lc7cM3QT2Gsjf62KQ43PI8SdKgl0cDZqo9LeCqts0sRuOJSUDCzSter_U9l0YrWIDM1qcvTKfAtTo-jSd_ZXxeQU3zTo1Yv6hDlloIVmyVdYt88J4O5LqGvOGU-Yk-3t6BAqJKDwLlYaDeBajL07YfR6tj0lw0MPXzAFEKgEMpUO_HFWpFXMA_kgUSgf68XyFQINU-Y9bJH4kl6WBHc71X0-bu3eR_guofTJEbgT5oiFJ1krG" fill className="object-cover" alt="CEO" />
+                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative flex items-center justify-center">
+                                     <span className="material-symbols-outlined text-gold/40 text-4xl">person</span>
                                  </div>
-                             </div>
-                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Elena Moretti</h5>
-                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">CEO · VEGAVRUDHI</p>
+                              </div>
+                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Devam Srivastava</h5>
+                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">FOUNDER & CEO · Synchronous</p>
                              <p className="font-body text-xs italic text-glacier/40 group-hover:text-glacier/80 transition-opacity translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 duration-500">
-                                "NATURE DOESN'T COMPROMISE. NEITHER DO WE."
+                                "DIGITAL EXPANSION AT SCALE."
                              </p>
-                        </div>
+                        </Link>
                     </div>
-                     {/* Founder 3 */}
+
+                    {/* Founder 3 - Saurabh Jain */}
                     <div className="snap-center shrink-0 w-80 perspective-card group cursor-pointer mt-24">
-                        <div className="perspective-card-inner relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
+                        <Link href="https://www.vegavruddhi.com/" target="_blank" className="perspective-card-inner block relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
                              <div className="w-24 h-24 rounded-full border-2 border-gold/30 p-1 mb-8">
-                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-700">
-                                     <Image src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYFf4WeYmKuhLqQiN8MiDfD6gnM0LeDS0T8X-pHX1X00GDBeRSo60Sh5crwO0K7iWdvdSPQkTHv7GCz297H4I6N36o8nCcNZ_q5tpNqViiVGoFQqZtmmRnXNpz8nyyrzHeJYE0bz9boRtvrbwIA98YHqe3MnMLruLJlCZdKQNu8uKrV8Ky4CUfkWsrP6WM3DZH4wWrP7r8eIgjTh0HBplLq7nUBftAZfx-S4iU9CMRiOMjMynaUdvMNs0nxoRC4rgENy8wLpigmAz5" fill className="object-cover" alt="CEO" />
+                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative flex items-center justify-center">
+                                     <span className="material-symbols-outlined text-gold/40 text-4xl">person</span>
                                  </div>
-                             </div>
-                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Alistair Vaughn</h5>
-                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">CHIEF OFFICER · RYM TECH</p>
+                              </div>
+                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Saurabh Jain</h5>
+                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">FOUNDER · VegaVrudhi</p>
                              <p className="font-body text-xs italic text-glacier/40 group-hover:text-glacier/80 transition-opacity translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 duration-500">
-                                "THE BEST WAY TO PREDICT THE FUTURE IS TO BUILD IT."
+                                "SALES IS THE CORE OF SOVEREIGN GROWTH."
                              </p>
-                        </div>
+                        </Link>
+                    </div>
+
+                    {/* Founder 4 - Yograj Rundhanker */}
+                    <div className="snap-center shrink-0 w-80 perspective-card group cursor-pointer mt-36">
+                        <Link href="https://rymgrenergy.com/" target="_blank" className="perspective-card-inner block relative p-10 bg-white/5 border border-white/5 group-hover:border-gold/30 group-hover:-translate-y-4 rounded-sm transition-all duration-700">
+                             <div className="w-24 h-24 rounded-full border-2 border-gold/30 p-1 mb-8">
+                                 <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative flex items-center justify-center">
+                                     <span className="material-symbols-outlined text-gold/40 text-4xl">person</span>
+                                 </div>
+                              </div>
+                             <h5 className="font-headline text-3xl italic text-glacier mb-2 group-hover:text-gold transition-colors">Yograj Rundhanker</h5>
+                             <p className="font-body text-[10px] uppercase tracking-[0.3em] text-gold/60 mb-8">FOUNDER & CEO · RYM</p>
+                             <p className="font-body text-xs italic text-glacier/40 group-hover:text-glacier/80 transition-opacity translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 duration-500">
+                                "AI AND ENERGY: THE TWIN PILLARS OF LEGACY."
+                             </p>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -343,10 +354,10 @@ export default function Home() {
         </section>
 
         {/* 6. CONTACT / FOOTER CTA */}
-        <section id="contact" className="py-32 md:py-48 px-8 md:px-24 bg-gold text-dark diagonal-wipe relative -mt-32">
+        <section id="contact" className="pt-32 pb-48 md:py-48 px-8 md:px-24 bg-gold text-dark diagonal-wipe relative -mt-32">
             <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row gap-24 items-center">
                 <div className="md:w-1/2">
-                    <h2 className="font-headline text-7xl md:text-9xl mb-8 leading-none italic">Build Something <br /> That Lasts.</h2>
+                    <h2 className="font-headline text-5xl md:text-9xl mb-8 leading-none italic">Build Something <br /> That Lasts.</h2>
                     <div className="flex gap-12 mt-16 font-body text-[10px] uppercase tracking-[0.5em] font-bold">
                         <div>
                              <span className="block opacity-40 mb-2">London HQ</span>
@@ -369,7 +380,7 @@ export default function Home() {
                          <div className="border-b border-dark/20 pb-4 transition-colors duration-500 focus-within:border-dark">
                             <textarea placeholder="PROPOSAL SUMMARY" className="w-full bg-transparent border-none focus:outline-none focus:ring-0 placeholder:text-dark/30 font-body text-sm uppercase tracking-widest h-32 resize-none" />
                         </div>
-                        <button className="w-full py-8 border border-dark/20 font-industrial text-2xl tracking-[0.4em] hover:bg-dark hover:text-gold transition-all duration-700 uppercase group flex items-center justify-center gap-4">
+                        <button className="w-full py-8 border border-dark/20 font-industrial text-lg md:text-2xl tracking-[0.2em] md:tracking-[0.4em] hover:bg-dark hover:text-gold transition-all duration-700 uppercase group flex items-center justify-center gap-4">
                             <span>Reach Out to Us</span>
                             <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform">mail</span>
                         </button>
@@ -380,14 +391,14 @@ export default function Home() {
 
         <footer className="bg-dark py-12 px-8 md:px-24 border-t border-white/5">
              <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-                   <div className="font-industrial text-gold tracking-[0.6em] text-3xl">ELYSIAN</div>
-                   <div className="flex flex-wrap justify-center gap-8 font-body text-[8px] uppercase tracking-[0.3em] opacity-40">
+                   <div className="font-industrial text-gold-premium tracking-[0.6em] text-2xl md:text-3xl">RISEMATE VENTURE</div>
+                   <div className="flex flex-wrap justify-center gap-4 md:gap-8 font-body text-[8px] uppercase tracking-[0.3em] opacity-40">
                        <span>Bworth</span>
                        <span>VegaVrudhi</span>
                        <span>RYM</span>
                        <span>Synchronous</span>
                    </div>
-                   <p className="font-body text-[10px] uppercase tracking-widest opacity-20">© 2024 ELYSIAN SOVEREIGN GROUP. ARCHITECTS OF LEGACY.</p>
+                   <p className="font-body text-[10px] uppercase tracking-widest opacity-20 text-center md:text-left">© 2024 RISEMATE VENTURE. ARCHITECTS OF LEGACY.</p>
              </div>
         </footer>
       </main>

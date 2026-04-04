@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Navbar from "../components/Navbar";
 
 // Custom Hook for Scroll Reveal
 function useReveal() {
@@ -98,19 +99,7 @@ export default function Investment() {
       <div className="cursor-dot hidden md:block" />
       <div className="cursor-outline hidden md:block" />
 
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-sm bg-dark/20">
-          <Link href="/" className="font-industrial text-2xl tracking-[0.2em] text-gold uppercase">ELYSIAN</Link>
-          <div className="flex gap-12 font-body text-[10px] uppercase tracking-[0.4em] font-semibold">
-              <Link href="/" className="hover:text-gold transition-colors">Home</Link>
-              <Link href="/companies" className="hover:text-gold transition-colors">Portfolios</Link>
-              <Link href="/operations" className="hover:text-gold transition-colors">Presence</Link>
-              <Link href="/leadership" className="hover:text-gold transition-colors">Governance</Link>
-          </div>
-          <Link href="/invest" className="bg-gold text-dark border border-gold/40 px-6 py-2 text-[10px] uppercase tracking-[0.2em] hover:bg-dark hover:text-gold transition-all duration-300">
-              Investor Portal
-          </Link>
-      </nav>
+      <Navbar />
 
       <main className="animate-page-in">
         {/* Investor Hero */}
@@ -121,7 +110,7 @@ export default function Investment() {
                    Unified <span className="text-gold">Wealth.</span> <br /> Radical <span className="italic font-light opacity-40">Growth.</span>
                 </h1>
                 <p className="font-body text-xl text-glacier/60 max-w-2xl leading-relaxed italic border-l border-gold/20 pl-8 ml-[10vw]">
-                    Investing in the Elysian Group is a commitment to the structural longevity of global industry. We don't just allocate capital; we engineer legacies.
+                    Investing in RISEMATE VENTURE is a commitment to the structural longevity of modern industry. We don't just allocate capital; we engineer growth.
                 </p>
             </div>
             <div className="absolute top-1/2 right-0 w-[50vw] h-[50vw] border-[0.2px] border-gold/5 rounded-full blur-3xl opacity-20 transform -translate-y-1/2 pointer-events-none" />
@@ -194,8 +183,8 @@ export default function Investment() {
 
         <footer className="bg-dark py-12 px-8 md:px-24 border-t border-white/5">
              <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-                   <div className="font-industrial text-gold tracking-[0.6em] text-3xl uppercase">ELYSIAN</div>
-                   <p className="font-body text-[10px] uppercase tracking-widest opacity-20">© 2024 ELYSIAN SOVEREIGN GROUP. CAPITAL SECURED.</p>
+                   <div className="font-industrial text-gold-premium tracking-[0.6em] text-3xl uppercase">RISEMATE VENTURE</div>
+                   <p className="font-body text-[10px] uppercase tracking-widest opacity-20">© 2024 RISEMATE VENTURE. CAPITAL SECURED.</p>
              </div>
         </footer>
       </main>

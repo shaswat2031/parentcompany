@@ -91,7 +91,12 @@
 
   /* Diagonal Section Transitions */
   .diagonal-wipe {
-    clip-path: polygon(0 15vh, 100% 0, 100% 85vh, 0 100%);
+    clip-path: polygon(0 5vh, 100% 0, 100% calc(100% - 5vh), 0 100%);
+  }
+  @media (min-width: 768px) {
+    .diagonal-wipe {
+      clip-path: polygon(0 15vh, 100% 0, 100% calc(100% - 15vh), 0 100%);
+    }
   }
 
   /* Perspective Tilt */
@@ -131,6 +136,22 @@
   .asymmetric-bleed-right {
     width: calc(100% + 50vw);
     min-width: 100%;
+  }
+
+  /* Premium Gold Gradient Text */
+  .text-gold-premium {
+    background: linear-gradient(135deg, #8E6D24 0%, #C9A84C 50%, #FFD700 80%, #8E6D24 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: goldShine 5s linear infinite;
+  }
+
+  @keyframes goldShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .gold-rule {

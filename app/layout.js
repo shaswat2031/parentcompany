@@ -2,8 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 export const metadata = {
-  title: "Elysian Sovereign | One Vision. Four Empires. ",
-  description: "A premium conglomerate merging Bworth, VegaVrudhi, RYM, and Synchronous Digital Build.",
+  title: "RISEMATE VENTURE | One Vision. Four Empires.",
+  description: "A premium conglomerate merging Bworth, VegaVrudhi, RYM, and Synchronous Digital Build under the RISEMATE banner.",
 };
 
 export default function RootLayout({ children }) {
