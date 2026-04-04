@@ -104,6 +104,7 @@ export default function Investment() {
           <div className="flex gap-12 font-body text-[10px] uppercase tracking-[0.4em] font-semibold">
               <Link href="/" className="hover:text-gold transition-colors">Home</Link>
               <Link href="/companies" className="hover:text-gold transition-colors">Portfolios</Link>
+              <Link href="/operations" className="hover:text-gold transition-colors">Presence</Link>
               <Link href="/leadership" className="hover:text-gold transition-colors">Governance</Link>
           </div>
           <Link href="/invest" className="bg-gold text-dark border border-gold/40 px-6 py-2 text-[10px] uppercase tracking-[0.2em] hover:bg-dark hover:text-gold transition-all duration-300">

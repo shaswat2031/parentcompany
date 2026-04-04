@@ -55,8 +55,8 @@ export default function Companies() {
       <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-sm bg-dark/20">
           <Link href="/" className="font-industrial text-2xl tracking-[0.2em] text-gold">ELYSIAN</Link>
           <div className="flex gap-12 font-body text-[10px] uppercase tracking-[0.4em] font-semibold">
-              <Link href="/" className="hover:text-gold transition-colors">Home</Link>
               <Link href="/companies" className="text-gold border-b border-gold/40 pb-1">Portfolios</Link>
+              <Link href="/operations" className="hover:text-gold transition-colors">Presence</Link>
               <Link href="/leadership" className="hover:text-gold transition-colors">Governance</Link>
           </div>
           <Link href="/invest" className="border border-gold/40 px-6 py-2 text-[10px] uppercase tracking-[0.2em] hover:bg-gold hover:text-dark transition-all duration-300">
