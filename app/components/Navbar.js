@@ -1,120 +1,157 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+
+const navLinks = [
+  { name: "About", href: "/about" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Leadership", href: "/leadership" },
+  { name: "Contact", href: "/contact" },
+];
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const { scrollY } = useScroll();
   const pathname = usePathname();
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    // Determine scrolled status
+    setScrolled(latest > 50);
 
-  const links = [
-    { name: "Portfolio", href: "/companies" },
-    { name: "Team", href: "/leadership" },
-    { name: "Contact", href: "/contact" },
-  ];
+    // Fade navbar out on scroll down, in on scroll up
+    if (latest > lastScrollY && latest > 200) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+    setLastScrollY(latest);
+  });
+
+  const isLightPage = ["/", "/about", "/leadership", "/portfolio", "/contact"].includes(pathname);
+  const isTransparent = !scrolled && isLightPage;
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled
-      ? "py-4 bg-dark/98 backdrop-blur-3xl border-b border-gold/15 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
-      : "py-10 bg-black/[0.02] backdrop-blur-[12px] border-b border-black/[0.05]"
-      }`}>
-      <div className="max-w-screen-2xl mx-auto px-6 md:px-12 flex justify-between items-center">
-        {/* LOGO ARCHITECTURE */}
-        <Link href="/" className="group flex items-center">
-          <div className="relative w-[160px] h-[50px] md:w-[240px] md:h-[70px] transition-all duration-700 group-hover:scale-105">
+    <motion.nav
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ 
+        y: visible ? 0 : -100, 
+        opacity: visible ? 1 : 0 
+      }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className={`fixed top-0 w-full z-[100] transition-all duration-1000 ease-in-out ${
+        !isTransparent 
+          ? "bg-white/90 backdrop-blur-xl shadow-[0_1px_10px_rgba(0,18,51,0.05)] py-4" 
+          : "bg-transparent py-8"
+      }`}
+    >
+      <div className="max-w-[1800px] mx-auto px-6 md:px-14 flex justify-between items-center whitespace-nowrap">
+        {/* Logo */}
+        <Link href="/" className="flex items-center group">
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative w-48 h-12"
+          >
             <Image
               src="/logo.png"
-              alt="RISEMATE VENTURE"
+              alt="RISEMATE Logo"
               fill
-              sizes="(max-width: 768px) 160px, 240px"
-              className={`object-contain transition-all duration-700 scale-[1.6] md:scale-[2]`}
+              className={`object-contain object-left scale-125 transition-all duration-1000 ${
+                isTransparent && !isLightPage ? "brightness-0 invert opacity-90" : "brightness-100"
+              } group-hover:opacity-100`}
               priority
             />
-          </div>
+          </motion.div>
         </Link>
 
-        {/* DESKTOP NAV ARCHITECTURE */}
-        <div className="hidden lg:flex gap-12 items-center">
-          <div className="flex gap-10 font-body text-[11px] md:text-[12px] uppercase tracking-[0.4em] font-bold">
-            {links.map((link, idx) => (
-              <Link
-                key={`${link.href}-${idx}`}
-                href={link.href}
-                className={`transition-all px-2 py-1 relative group ${pathname === link.href
-                  ? "text-gold"
-                  : scrolled ? "text-glacier/50 hover:text-glacier" : "text-dark hover:text-gold"
-                  }`}
-              >
-                {link.name}
-                <span className={`absolute bottom-[-10px] left-0 h-[2px] bg-gold transition-all duration-700 ${pathname === link.href ? 'w-full' : 'w-0 group-hover:w-full'}`} />
-              </Link>
-            ))}
-          </div>
-
-          <div className={`h-8 w-px mx-6 transition-colors duration-500 ${scrolled ? 'bg-white/10' : 'bg-dark/10'}`} />
-
-          <Link
-            href="/contact"
-            className={`group relative px-10 py-4 border transition-all duration-700 font-industrial text-[11px] tracking-[0.5em] font-bold uppercase overflow-hidden ${scrolled
-              ? 'bg-white/5 border-white/10 text-glacier hover:bg-gold hover:text-dark hover:border-gold'
-              : 'bg-dark/5 border-dark/10 text-dark hover:bg-gold hover:text-dark hover:border-gold'
-              }`}
+        {/* Desktop Nav Links */}
+        <div className="hidden lg:flex items-center gap-14">
+          <motion.div 
+            initial="initial"
+            animate="animate"
+            variants={{
+              animate: {
+                transition: {
+                  staggerChildren: 0.08
+                }
+              }
+            }}
+            className="flex gap-10 items-center"
           >
-            <span className="relative z-10 flex items-center gap-4">
-              Initialize <span className="material-symbols-outlined text-sm group-hover:rotate-45 transition-transform duration-500">bolt</span>
-            </span>
-            <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
-          </Link>
-        </div>
+            {navLinks.map((link) => (
+              <motion.div
+                key={link.name}
+                variants={{
+                  initial: { opacity: 0, y: -20 },
+                  animate: { opacity: 1, y: 0 }
+                }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link
+                  href={link.href}
+                  className={`group relative text-[11px] font-black uppercase tracking-[0.4em] transition-colors duration-700 ${
+                    isTransparent && !isLightPage ? "text-white/70 hover:text-white" : "text-dark/60 hover:text-blue-600"
+                  }`}
+                >
+                  <span className="relative z-10">{link.name}</span>
+                  <motion.span 
+                    className={`absolute -bottom-2 left-0 w-0 h-[2px] transition-all duration-700 group-hover:w-full ${
+                      isTransparent && !isLightPage ? "bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]" : "bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+                    }`}
+                  />
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        {/* MOBILE TRIGGER */}
-        <button
-          className={`lg:hidden z-[60] p-4 bg-white/5 border rounded-sm transition-all duration-500 ${scrolled ? 'text-gold border-white/10' : 'text-dark border-dark/10'
+          {/* Right Section Wrapper */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.8, duration: 1 }}
+            className={`flex items-center gap-10 pl-14 border-l h-6 ${
+              isTransparent && !isLightPage ? "border-white/10" : "border-dark/10"
             }`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle Sovereign Menu"
-        >
-          <span className="material-symbols-outlined text-3xl">
-            {isMenuOpen ? "close" : "segment"}
-          </span>
-        </button>
-      </div>
-
-      {/* MOBILE OVERLAY ARCHITECTURE */}
-      <div
-        className={`fixed inset-0 bg-dark z-50 lg:hidden flex flex-col items-center justify-center transition-all duration-1000 ${isMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
-          }`}
-      >
-        <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-gold/[0.03] to-transparent pointer-events-none" />
-        <div className="flex flex-col gap-10 text-center px-12 relative z-10">
-          <span className="font-industrial text-gold/30 tracking-[1em] text-xs uppercase font-bold mb-8">Navigation Registry</span>
-          {links.map((link, idx) => (
+          >
             <Link
-              key={`${link.href}-${idx}`}
-              href={link.href}
-              onClick={() => setIsMenuOpen(false)}
-              className={`font-headline italic text-5xl md:text-6xl transition-all duration-700 hover:scale-110 ${pathname === link.href ? "text-gold" : "text-glacier/40 hover:text-glacier"
-                }`}
+              href="/contact"
+              className={`group relative text-[11px] font-black uppercase tracking-[0.5em] transition-all duration-700 ${
+                isTransparent && !isLightPage ? "text-white hover:opacity-80" : "text-dark hover:text-blue-600"
+              }`}
             >
-              {link.name}
+              <span className="flex items-center gap-3">
+                Join NEXUS
+                <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform duration-500">arrow_forward</span>
+              </span>
             </Link>
-          ))}
-          <div className="mt-16 border-t border-white/5 pt-16 flex flex-col items-center gap-6">
-            <Link href="/#contact" onClick={() => setIsMenuOpen(false)} className="font-industrial text-gold tracking-[0.6em] text-sm font-bold uppercase underline underline-offset-8">
-              Begin Sequence →
-            </Link>
-          </div>
+
+            {/* Global Language Switcher */}
+            <div className={`flex gap-3 text-[10px] font-black transition-colors duration-1000 ${
+              isTransparent && !isLightPage ? "text-white/40" : "text-dark/40"
+            }`}>
+              <span className={`cursor-not-allowed hover:text-blue-600 transition-colors ${
+                isTransparent && !isLightPage ? "text-white" : "text-dark"
+              }`}>EN</span>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Mobile Navbar Interaction Button */}
+        <motion.button 
+          whileTap={{ scale: 0.9 }}
+          whileHover={{ scale: 1.1 }}
+          className={`lg:hidden w-14 h-14 flex items-center justify-center rounded-full transition-all duration-700 ${
+            isTransparent && !isLightPage ? "bg-white text-dark shadow-2xl" : "bg-dark text-white shadow-2xl"
+          }`}
+        >
+          <span className="material-symbols-outlined text-2xl">menu_open</span>
+        </motion.button>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

@@ -90,7 +90,7 @@ export default function Companies() {
                 <section className="py-24 px-6 md:px-24 bg-white border-b border-dark/5">
                     <div className="max-w-screen-2xl mx-auto">
                         <span className="font-industrial text-gold tracking-[0.5em] text-[10px] uppercase font-bold mb-8 block">Global Portfolio</span>
-                        <h1 className="font-headline italic text-6xl md:text-[8rem] text-dark leading-none italic">The Sovereign Digital <br /> Legacy.</h1>
+                        <h1 className="font-headline italic text-6xl md:text-8xl lg:text-[10rem] text-dark leading-none italic mb-12">The Sovereign Digital <br /> Legacy.</h1>
                     </div>
                 </section>
 
@@ -188,7 +188,18 @@ export default function Companies() {
                     />
                 </div>
 
-                {/* Footer and Contact update */}
+                {/* 3. CTA */}
+                <section className="py-24 md:py-32 px-6 md:px-24 bg-white text-center border-t border-dark/5">
+                    <div className="max-w-4xl mx-auto">
+                        <span className="font-industrial text-gold tracking-[1em] text-[11px] uppercase font-bold mb-10 block italic opacity-60">Initialize Strategic Partnership</span>
+                        <h2 className="font-headline italic text-4xl md:text-7xl leading-tight text-dark mb-16 italic tracking-tighter">Induct Your Brand <br /> Into the Legacy.</h2>
+                        <Link href="/contact" className="inline-flex items-center gap-4 px-12 py-5 bg-dark text-glacier font-industrial text-[11px] tracking-[0.5em] font-bold uppercase transition-all hover:bg-gold hover:text-dark shadow-2xl hover:-translate-y-1 group">
+                            Become A Partner
+                            <span className="material-symbols-outlined text-sm transition-transform duration-700 group-hover:translate-x-1 group-hover:-translate-y-1">open_in_new</span>
+                        </Link>
+                    </div>
+                </section>
+
                 <footer className="bg-dark py-12 md:py-20 px-8 md:px-24 border-t border-white/5 relative overflow-hidden">
                     <div className="max-w-screen-2xl mx-auto">
                         {/* BRAND ARCHITECTURE - COMPACT */}

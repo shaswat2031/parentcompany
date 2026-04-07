@@ -70,7 +70,7 @@ export default function Partners() {
                 <section ref={introReveal.ref} className="py-24 md:py-48 px-6 md:px-24 bg-white relative overflow-hidden border-b border-dark/5">
                     <div className="max-w-screen-2xl mx-auto">
                         <span className="font-industrial text-gold tracking-[0.8em] text-[11px] uppercase font-bold mb-8 block underline decoration-gold/20 underline-offset-8">Strategic Registry</span>
-                        <h1 className="font-headline italic text-6xl md:text-[8.5rem] leading-[0.85] text-dark mb-12 tracking-tighter">The Global <br className="hidden md:block" /> Strategic Nexus.</h1>
+                        <h1 className="font-headline italic text-6xl md:text-8xl lg:text-[8.5rem] leading-[0.85] text-dark mb-12 tracking-tighter">The Global <br className="hidden md:block" /> Strategic Nexus.</h1>
                         <p className="font-body text-xl md:text-3xl text-dark leading-relaxed italic border-l-2 border-gold/40 pl-12 max-w-5xl opacity-80 uppercase tracking-tight">
                             Integrating world-class institutional capital, deep-tech research labs, and hyper-velocity industrial nodes into a sovereign operational kernel.
                         </p>
@@ -190,8 +190,9 @@ export default function Partners() {
                     <div className="max-w-4xl mx-auto">
                         <span className="font-industrial text-gold tracking-[1em] text-[11px] uppercase font-bold mb-10 block italic opacity-60">Initialize Strategic Nexus</span>
                         <h2 className="font-headline italic text-4xl md:text-7xl leading-tight text-dark mb-16 italic tracking-tighter">Enter The Global <br /> Registry.</h2>
-                        <Link href="/#contact" className="inline-block px-12 py-5 bg-dark text-glacier font-industrial text-xs tracking-[0.5em] font-bold uppercase transition-all hover:bg-gold hover:text-dark shadow-2xl hover:-translate-y-1">
-                            Induct Your Institution
+                        <Link href="/contact" className="inline-flex items-center gap-4 px-12 py-5 bg-dark text-glacier font-industrial text-[11px] tracking-[0.5em] font-bold uppercase transition-all hover:bg-gold hover:text-dark shadow-2xl hover:-translate-y-1 group">
+                            Become A Partner
+                            <span className="material-symbols-outlined text-sm transition-transform duration-700 group-hover:translate-x-1 group-hover:-translate-y-1">open_in_new</span>
                         </Link>
                     </div>
                 </section>
