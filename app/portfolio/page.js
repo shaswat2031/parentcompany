@@ -18,30 +18,33 @@ const entities = [
         pillars: ["BWorth Coins (1:1 Value)", "Landfill Elimination", "Live CO₂ Monitoring"],
         metrics: ["10,000+ Items Recycled", "25,000+ total Items Saved"],
         color: "text-green-600",
-        link: "https://bworth.co.in"
+        link: "https://bworth.co.in",
+        logo: "/BWORTH.jpg"
     },
     {
         id: "02",
         name: "Vega Vrudhi",
         tagline: "Precision Execution & Growth Architecture",
         tag: "Managed Sales",
-        img: "https://images.unsplash.com/photo-1600880212340-0234403d18ff?q=80&w=2670&auto=format&fit=crop",
+        img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2670&auto=format&fit=crop",
         desc: "Precision execution architecture bridging the gap between digital leads and on-ground reality. We deploy trained field teams to accelerate market presence for national growth engines.",
         pillars: ["Digital Lead Fulfillment", "Activation Programs", "Merchant Onboarding"],
         sectors: ["FinTech", "FMCG", "E-Commerce", "GovTech"],
         color: "text-blue-600",
-        link: "https://vegavruddhi.com"
+        link: "https://vegavruddhi.com",
+        logo: "/VEGA.png"
     },
     {
         id: "03",
         name: "RYM Grenergy",
         tagline: "Intelligent Systems & Deep-Tech Engineering",
         tag: "Clean Energy",
-        img: "https://images.unsplash.com/photo-1509391366360-fe5bb6058826?q=80&w=2670&auto=format&fit=crop",
+        img: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2670&auto=format&fit=crop",
         desc: "Enabling a carbon-neutral future by developing the world’s greenest battery cell and intelligent green-tech infrastructure through AI, IoT, and Smart Automation.",
         pillars: ["ULTRON Energy Platform", "INTELLEXA AI", "Weighbridge AI", "REEWS Earthquake Warning"],
         color: "text-emerald-500",
-        link: "https://rym-grenergy.com"
+        link: "https://rym-grenergy.com",
+        logo: "https://rymgrenergy.com/images/logo.png"
     },
     {
         id: "04",
@@ -52,7 +55,9 @@ const entities = [
         desc: "Architecting high-velocity digital ecosystems for high-growth elite brands. We build vertically integrated brand identities and compound ROI via algorithmic process automation.",
         pillars: ["Brand Identity Architecture", "Autonomous AI Agents", "Data-Backed Growth", "Predictive Modeling"],
         color: "text-purple-600",
-        link: "https://synchronous.digital"
+        link: "https://synchronous.digital",
+        logo: "/sync.jpg",
+        logoBg: "bg-white"
     }
 ];
 
@@ -77,9 +82,18 @@ export default function Portfolio() {
                                 Institutional <br />
                                 <span className="text-dark/20 italic">Portfolio.</span>
                             </h1>
-                            <p className="text-xl md:text-3xl text-dark/60 font-secondary max-w-4xl border-l-[4px] border-gold pl-12 py-4">
-                                A legacy of strategic allocation across four high-velocity sectors. Each entity operates as a sovereign architectural unit under the RiseMate banner.
-                            </p>
+                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-l-[4px] border-blue-600 pl-12 py-6">
+                                <p className="text-xl md:text-3xl text-dark/60 font-secondary max-w-2xl">
+                                    A legacy of strategic allocation across four high-velocity sectors. Each entity operates as a sovereign architectural unit under the RiseMate banner.
+                                </p>
+
+                                <div className="flex flex-col items-start md:items-end gap-6 bg-dark/[0.03] p-10 rounded-[40px] border border-dark/5 shadow-2xl backdrop-blur-xl">
+                                    <div className="relative w-48 h-12 grayscale hover:grayscale-0 transition-all duration-1000">
+                                        <Image src="/logo.png" alt="RiseMate Venture" fill className="object-contain object-left md:object-right" />
+                                    </div>
+                                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 text-left md:text-right">Overarching <br /> Sovereign Entity</p>
+                                </div>
+                            </div>
                         </motion.div>
                     </div>
                 </section>
@@ -108,7 +122,7 @@ function EntitySection({ entity, index }) {
     const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
     return (
-        <section ref={sectionRef} className="container-wide">
+        <section ref={sectionRef} className="container-wide relative">
             <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24 items-center`}>
                 {/* Image side */}
                 <div className={`lg:col-span-1 border-r border-dark/5 hidden lg:block`}>
@@ -116,13 +130,14 @@ function EntitySection({ entity, index }) {
                         0{entity.id}
                     </p>
                 </div>
-                
+
                 <div className={`lg:col-span-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
                     <div className="relative aspect-[16/10] rounded-[40px] overflow-hidden group">
                         <Image
                             src={entity.img}
                             alt={entity.name}
                             fill
+                            sizes="(max-width: 1200px) 100vw, 50vw"
                             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100"
                         />
                         <div className="absolute inset-0 bg-dark/20 group-hover:bg-transparent transition-all duration-1000" />
@@ -131,7 +146,7 @@ function EntitySection({ entity, index }) {
 
                 {/* Content side */}
                 <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: isEven ? 50 : -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: isEven ? 50 : -50 }}
@@ -143,12 +158,19 @@ function EntitySection({ entity, index }) {
                             <span className="px-4 py-1 bg-dark text-white text-[10px] font-black uppercase tracking-widest rounded-full">{entity.tag}</span>
                             <div className="h-[1px] flex-grow bg-dark/5"></div>
                         </div>
-                        
-                        <h2 className="text-4xl md:text-6xl font-black text-dark mb-6 tracking-tighter">
-                            {entity.name}
-                        </h2>
-                        
-                        <p className="text-sm font-black uppercase tracking-[0.2em] text-gold mb-8 italic">
+
+                        <div className="flex items-center justify-between gap-6 mb-10">
+                            <h2 className="text-4xl md:text-7xl font-black text-dark tracking-tighter">
+                                {entity.name}
+                            </h2>
+                            {entity.logo && (
+                                <div className={`w-20 h-20 ${entity.logoBg || 'bg-white'} rounded-2xl shadow-xl flex items-center justify-center p-4 border border-dark/5 hover:scale-110 transition-all duration-700`}>
+                                    <img src={entity.logo} alt={entity.name} className="w-full h-full object-contain" />
+                                </div>
+                            )}
+                        </div>
+
+                        <p className="text-xs md:text-sm font-black uppercase tracking-[0.2em] text-blue-600 mb-8 italic">
                             {entity.tagline}
                         </p>
 

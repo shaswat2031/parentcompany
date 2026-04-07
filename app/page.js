@@ -78,86 +78,103 @@ const RevealText = ({ text, className = "" }) => {
 };
 
 const PortfolioItem = ({ item, index }) => {
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start end", "end start"]
-    });
-
-    const isEven = index % 2 === 0;
-    const y = useTransform(scrollYProgress, [0, 1], [200, -200]);
-    const smoothY = useSpring(y, { stiffness: 40, damping: 20 });
-
-    const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0.9, 1, 1, 0.9]);
-
     return (
-        <div ref={ref} className="group relative py-20 md:py-40 lg:py-64">
-            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-32 items-center`}>
-                {/* Image Side */}
-                <motion.div
-                    style={{ opacity, scale }}
-                    className={`lg:col-span-7 relative ${isEven ? 'lg:order-1' : 'lg:order-2'}`}
-                >
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-[32px] md:rounded-[64px] bg-dark/5 shadow-[0_60px_120px_-20px_rgba(0,18,51,0.2)]">
-                        <motion.div style={{ y: smoothY, scale: 1.3 }} className="absolute inset-0">
-                            <Image
-                                src={item.img}
-                                alt={item.title}
-                                fill
-                                className="object-cover transition-opacity duration-1000 group-hover:opacity-90"
-                            />
-                        </motion.div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                    </div>
-                    {/* Index Floating */}
-                    <motion.div
-                        initial={{ opacity: 0, x: isEven ? 50 : -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.6, duration: 1 }}
-                        className={`absolute -top-12 ${isEven ? '-right-12' : '-left-12'} w-32 h-32 bg-white rounded-full shadow-2xl flex items-center justify-center z-20 md:flex hidden border border-dark/5 group-hover:bg-blue-600 transition-all duration-700 ease-in-out`}
-                    >
-                        <span className="text-4xl font-black text-dark/10 group-hover:text-white transition-colors duration-700">0{index + 1}</span>
-                    </motion.div>
-                </motion.div>
-
-                {/* Content Side */}
-                <div className={`lg:col-span-5 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-                    <motion.div
-                        variants={sectionAnimation}
-                        initial="initial"
-                        whileInView="whileInView"
-                        exit="exit"
-                    >
-                        <div className="flex items-center gap-4 mb-10">
-                            <span className="px-5 py-2 bg-blue-50 text-blue-700 text-xs font-black uppercase tracking-[0.2em] rounded-full">{item.tag}</span>
-                            <div className="h-[1px] flex-grow bg-dark/5"></div>
-                        </div>
-                        {item.tagline && (
-                            <p className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-6 italic flex items-center gap-3">
-                                <span className="w-6 h-[1px] bg-blue-600/30"></span>
-                                {item.tagline}
-                            </p>
-                        )}
-                        <h3 className="text-4xl md:text-7xl font-black text-dark mb-8 leading-[1.1] tracking-tighter">
-                            {item.title}
-                        </h3>
-                        <p className="text-xl text-dark/40 font-secondary leading-relaxed mb-12 max-w-md">
-                            {item.desc}
-                        </p>
-                        <Link href="/portfolio" className="inline-flex items-center gap-8 text-sm font-black uppercase tracking-[0.4em] text-dark group/link">
-                            <span className="relative">
-                                View Case Study
-                                <span className="absolute -bottom-3 left-0 w-8 h-[2px] bg-blue-600 transition-all duration-700 group-hover/link:w-full"></span>
-                            </span>
-                            <div className="w-16 h-16 border border-dark/10 rounded-full flex items-center justify-center group-hover/link:bg-dark group-hover/link:text-white transition-all duration-700 group-hover/link:translate-x-4">
-                                <span className="material-symbols-outlined text-2xl group-hover/link:rotate-45 transition-transform">north_east</span>
-                            </div>
-                        </Link>
-                    </motion.div>
-                </div>
+        <motion.div
+            variants={fadeInUp}
+            whileHover={{ y: -8 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="group relative flex flex-col bg-[#fdfdfd] rounded-[24px] md:rounded-[32px] border border-dark/5 p-5 md:p-6 hover:border-blue-600/20 hover:shadow-[0_40px_80px_-20px_rgba(0,18,51,0.06)] transition-all duration-1000 overflow-hidden"
+        >
+            {/* Registry Numbering */}
+            <div className="absolute -top-4 -right-4 pointer-events-none opacity-[0.02] transition-all duration-1000 group-hover:opacity-[0.05] group-hover:scale-105 group-hover:text-blue-600">
+                <span className="text-[120px] font-black leading-none">0{index + 1}</span>
             </div>
-        </div>
+
+            {/* Header Label and Entity ID */}
+            <div className="flex items-center justify-between gap-4 mb-5 relative z-10">
+                <div className="flex items-center gap-2">
+                    <span className="px-2 py-1 bg-blue-50 text-blue-700 text-[7px] font-black uppercase tracking-[0.2em] rounded-md">{item.tag}</span>
+                    <div className="h-[1px] w-8 bg-dark/5"></div>
+                </div>
+                <p className="text-[7px] font-black uppercase tracking-[0.4em] text-dark/20 italic">Entity 0{index + 1}</p>
+            </div>
+
+            {/* Immersive Image with Logo Overlay */}
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[16px] mb-5 shadow-lg transition-all duration-1000">
+                <Image
+                    src={item.img}
+                    alt={item.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-[2000ms] ease-out"
+                />
+                <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+
+                {/* Logo Integration */}
+                {item.logo ? (
+                    <div className={`absolute bottom-4 right-4 w-12 h-12 ${item.logoBg || 'bg-white'} flex items-center justify-center rounded-lg shadow-xl overflow-hidden border border-dark/5 p-2 transition-all duration-700 group-hover:scale-110`}>
+                        <img src={item.logo} alt={item.title} className="w-8 h-8 object-contain" />
+                    </div>
+                ) : (
+                    <div className="absolute bottom-4 right-4 w-12 h-12 bg-white flex items-center justify-center rounded-lg shadow-xl overflow-hidden border border-dark/5">
+                        <span className="text-[8px] font-black text-dark/20 tracking-tighter italic">NEXUS</span>
+                    </div>
+                )}
+            </div>
+
+            {/* Registry Content */}
+            <div className="flex flex-col relative z-10 flex-grow">
+                <p className="text-[7px] font-black uppercase tracking-[0.4em] text-blue-600 mb-2 opacity-60 italic">{item.tagline}</p>
+                <h3 className="text-xl md:text-2xl font-black text-dark mb-4 tracking-tighter leading-none hover:text-blue-600 transition-colors duration-500 uppercase">{item.title}</h3>
+
+                <p className="text-xs md:text-sm text-dark/60 font-secondary leading-normal mb-8">
+                    {item.desc}
+                </p>
+
+                {/* High-Density Pillars */}
+                <div className="mb-8 p-4 bg-dark/[0.02] rounded-2xl border border-dark/5">
+                    <p className="text-[7px] font-black uppercase tracking-[0.3em] text-dark/30 mb-3">Core Pillars</p>
+                    <div className="flex flex-wrap gap-2">
+                        {item.pillars?.map((pillar, i) => (
+                            <span key={i} className="px-2 py-1 bg-white border border-dark/5 rounded text-[8px] font-black text-dark/60 uppercase tracking-wider">{pillar}</span>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Impact Metrics / Expertise */}
+                {(item.metrics || item.expertise) && (
+                    <div className="mb-10 flex gap-6">
+                        {item.metrics && (
+                            <div className="flex-1">
+                                <p className="text-[7px] font-black uppercase tracking-[0.3em] text-dark/30 mb-2 text-blue-600/60">Impact</p>
+                                <ul className="space-y-1">
+                                    {item.metrics.map((m, i) => (
+                                        <li key={i} className="text-[9px] font-black text-dark truncate uppercase tracking-tight">{m}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                        {item.expertise && (
+                            <div className="flex-1">
+                                <p className="text-[7px] font-black uppercase tracking-[0.3em] text-dark/30 mb-2">Expertise</p>
+                                <div className="flex flex-wrap gap-1">
+                                    {item.expertise.map((e, i) => (
+                                        <span key={i} className="text-[9px] font-black text-dark/40 uppercase">{e} {i < item.expertise.length - 1 ? '·' : ''}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                <Link href="/portfolio" className="mt-auto inline-flex items-center gap-3 group/link">
+                    <span className="text-[8px] font-black uppercase tracking-[0.4em] text-dark border-b-[1px] border-blue-600/20 py-1 group-hover/link:border-blue-600 transition-all duration-500">Explore Website</span>
+                    <div className="w-7 h-7 rounded-full border border-dark/10 flex items-center justify-center group-hover/link:bg-dark group-hover/link:text-white transition-all duration-700">
+                        <span className="material-symbols-outlined text-[8px] group-hover/link:rotate-45 transition-transform">north_east</span>
+                    </div>
+                </Link>
+            </div>
+        </motion.div>
     );
 };
 
@@ -175,23 +192,42 @@ const FounderCard = ({ founder }) => {
             <div className={`absolute top-0 right-0 w-80 h-80 bg-blue-600/5 rounded-full -translate-y-40 translate-x-40 blur-[100px] transition-all duration-1000 ${isInView ? 'scale-150' : 'scale-50 opacity-0'}`} />
 
             <div className="relative z-10 flex flex-col h-full justify-between">
-                <div className="flex flex-col gap-10">
-                    <div>
-                        <motion.h4
-                            className="text-2xl md:text-3xl font-black text-dark mb-2 transition-colors group-hover:text-blue-600"
-                        >
-                            {founder.name}
-                        </motion.h4>
-                        <p className="text-[11px] font-black uppercase tracking-[0.3em] text-blue-600/80">{founder.role}</p>
+                <div className="flex flex-col gap-10 h-full">
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-blue-600/60 mb-2">Executive Lead</p>
+                            <motion.h4
+                                className="text-3xl md:text-4xl font-black text-dark mb-1 transition-colors group-hover:text-blue-600"
+                            >
+                                {founder.name}
+                            </motion.h4>
+                            <p className="text-[11px] font-black uppercase tracking-[0.2em] text-dark/40">{founder.role}</p>
+                        </div>
+                        {founder.logo && (
+                            <div className="w-12 h-12 bg-white rounded-lg p-2 border border-dark/5 shadow-sm overflow-hidden flex items-center justify-center">
+                                <Image src={founder.logo} alt={founder.name} width={32} height={32} className="object-contain" unoptimized={true} />
+                            </div>
+                        )}
+                        {!founder.logo && (
+                            <div className="w-12 h-12 rounded-full border border-dark/10 flex items-center justify-center opacity-40 group-hover:opacity-100 transition-all duration-700 overflow-hidden">
+                                <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse" />
+                            </div>
+                        )}
                     </div>
 
-                    <p className="text-xl text-dark/50 font-secondary leading-tight italic border-l-4 border-gold/20 pl-6 group-hover:border-blue-600 transition-all duration-1000 ease-in-out">
+                    <p className="text-[14px] md:text-[15px] font-medium text-dark/70 font-secondary leading-relaxed border-l-2 border-blue-600/20 pl-8 group-hover:border-blue-600 transition-all duration-1000 ease-in-out py-2 italic">
                         "{founder.philosophy || founder.vision}"
                     </p>
 
-                    <div className="pt-12 border-t border-dark/5">
-                        <p className="text-[10px] font-black uppercase tracking-[0.5em] text-dark/20 mb-4">Institutional Focus</p>
-                        <p className="text-base font-bold text-dark/70 uppercase tracking-widest group-hover:text-dark transition-colors duration-700">{founder.focus}</p>
+                    <div className="pt-10 mt-auto border-t border-dark/5">
+                        <div className="flex items-center gap-4 mb-4">
+                            <div className="h-[1px] w-8 bg-blue-600/20" />
+                            <p className="text-[9px] font-black uppercase tracking-[0.4em] text-dark/20 text-nowrap">Institutional Mandate</p>
+                            <div className="h-[1px] flex-grow bg-dark/5" />
+                        </div>
+                        <p className="text-xs font-black text-dark/80 uppercase tracking-[0.2em] leading-relaxed group-hover:text-blue-600 transition-colors duration-700">
+                            {founder.focus}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -203,30 +239,41 @@ const portfolioItems = [
     {
         title: "BWorth",
         img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop",
-        desc: "Revolutionizing the fashion industry through a unique circular luxury ecosystem. Buy, sell, and recycle fashion while earning rewards.",
-        tag: "Sustainable Fashion",
-        tagline: "Circular Economy Mastery"
+        desc: "Revolutionizing the fashion industry through a unique circular luxury ecosystem. Buy, sell, and recycle fashion while earning rewards through our unique buyback program that preserves the planet's beauty.",
+        tag: "Circular Luxury",
+        tagline: "Sustainable Fashion Innovation Leader",
+        logo: "/BWORTH.jpg",
+        pillars: ["BWorth Coins (1:1 Value)", "Landfill Elimination", "Live CO₂ Monitoring"],
+        metrics: ["10,000+ Items Recycled", "25,000+ total Items Saved"]
     },
     {
         title: "Vega Vrudhi",
-        img: "https://images.unsplash.com/photo-1600880212340-0234403d18ff?q=80&w=2670&auto=format&fit=crop",
-        desc: "Precision execution architecture bridging the gap between digital leads and on-ground reality through managed sales and activation.",
-        tag: "Growth Architecture",
-        tagline: "Execution Intelligence"
+        img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2670&auto=format&fit=crop",
+        desc: "Precision execution architecture bridging the gap between digital leads and on-ground reality. We deploy trained field teams to accelerate market presence for national growth engines.",
+        tag: "Managed Sales",
+        tagline: "Precision Execution & Growth Architecture",
+        logo: "/VEGA.png",
+        pillars: ["Digital Lead Fulfillment", "Activation Programs", "Merchant Onboarding"],
+        expertise: ["FinTech", "FMCG", "E-Commerce", "GovTech"]
     },
     {
         title: "RYM Grenergy",
-        img: "https://images.unsplash.com/photo-1509391366360-fe5bb6058826?q=80&w=2670&auto=format&fit=crop",
-        desc: "Enabling a carbon-neutral future through intelligent energy management, AI-driven document intelligence, and smart automation.",
-        tag: "Inelligent Systems",
-        tagline: "Sustainable Infrastructure"
+        img: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=2670&auto=format&fit=crop",
+        desc: "Enabling a carbon-neutral future by developing the world’s greenest battery cell and intelligent green-tech infrastructure through AI, IoT, and Smart Automation.",
+        tag: "Clean Energy",
+        tagline: "Intelligent Systems & Deep-Tech Engineering",
+        logo: "https://rymgrenergy.com/images/logo.png",
+        pillars: ["ULTRON Energy Platform", "INTELLEXA AI", "Weighbridge AI", "REEWS Earthquake Warning"]
     },
     {
         title: "Synchronous",
         img: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?q=80&w=2670&auto=format&fit=crop",
-        desc: "Architecting high-velocity digital ecosystems for elite brands using autonomous AI agents and data-backed growth strategies.",
-        tag: "Digital Marketing",
-        tagline: "Autonomous Growth Engines"
+        desc: "Architecting high-velocity digital ecosystems for high-growth elite brands. We build vertically integrated brand identities and compound ROI via algorithmic process automation.",
+        tag: "Autonomous AI",
+        tagline: "High-Performance Digital Marketing Group",
+        logo: "/sync.jpg",
+        logoBg: "bg-white",
+        pillars: ["Brand Identity Architecture", "Autonomous AI Agents", "Data-Backed Growth", "Predictive Modeling"]
     },
 ];
 
@@ -234,21 +281,18 @@ const founders = [
     {
         name: "Saurabh Jain",
         role: "Founder & CEO · Vega Vrudhi",
-        vision: "Scaling on-ground execution through AI/ML-driven precision.",
-        focus: "Managed sales & growth engines.",
-        philosophy: "Numbers don't lie, but passion drives them."
+        vision: "Architecting high-performance field-force efficiency through algorithmic sales fulfillment for national growth engines.",
+        focus: "Strategic Retail Expansion & End-to-End Lead conversion fulfillment across India's Tier 1 and 2 cities.",
+        philosophy: "Building on-ground execution intelligence via precision managed sales infrastructure.",
+        logo: "/VEGA.png"
     },
     {
         name: "Dheeraj Anand",
         role: "Founder & CEO · BWorth",
-        focus: "Circular luxury & sustainable upcycling.",
-        philosophy: "BWorth is more than just a company; it is a movement towards conscious consumerism."
-    },
-    {
-        name: "Yograj Rundhanker",
-        role: "Founder & CEO · RYM Grenergy",
-        focus: "AI/ML, IoT & Clean-Tech infrastructure.",
-        philosophy: "Enabling the future of energy by developing the world’s greenest battery cell."
+        vision: "Re-imagining luxury fashion as a circular asset, creating a global movement towards zero-landfill conscious consumerism.",
+        focus: "Circular Luxury Fashion, Ethical Upcycling Ecosystems & Sustainable Global Value Chain Integration.",
+        philosophy: "Redefining the value of waste through industrial-scale circular luxury fashion architecture.",
+        logo: "/BWORTH.jpg"
     }
 ];
 
@@ -263,16 +307,16 @@ export default function Home() {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_-20%,#e0ebf577,transparent_50%)] pointer-events-none" />
 
                     <div className="max-w-[1700px] mx-auto px-6 md:px-14 w-full relative z-10 h-full flex flex-col justify-center">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
 
                             {/* LEFT: IMAGE REVEAL & PARALLAX */}
                             <motion.div
                                 variants={imageReveal}
                                 initial="initial"
                                 animate="animate"
-                                className="relative flex justify-center py-2"
+                                className="lg:col-span-7 relative flex justify-center py-2"
                             >
-                                <div className="relative w-full max-w-[700px] aspect-[4/5] max-h-[55vh] md:max-h-[65vh] rounded-[48px] md:rounded-[80px] overflow-hidden shadow-[0_60px_100px_-30px_rgba(0,18,51,0.2)] bg-dark group">
+                                <div className="relative w-full max-w-[850px] aspect-[4/5] max-h-[60vh] md:max-h-[75vh] rounded-[48px] md:rounded-[80px] overflow-hidden shadow-[0_60px_100px_-30px_rgba(0,18,51,0.2)] bg-dark group">
                                     <motion.div
                                         initial={{ scale: 1.2 }}
                                         animate={{ scale: 1 }}
@@ -283,34 +327,14 @@ export default function Home() {
                                             src="/hero-cityscape-v2.png"
                                             alt="RiseMate Institutional HQ Design"
                                             fill
+                                            sizes="(max-width: 1200px) 100vw, 50vw"
                                             className="object-cover brightness-90 group-hover:scale-105 transition-transform duration-[3000ms] ease-out"
                                             priority
                                         />
                                     </motion.div>
                                     <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent pointer-events-none" />
 
-                                    {/* Floating Stats or Labels */}
-                                    <motion.div
-                                        initial={{ y: 50, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        transition={{ delay: 1.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                                        className="absolute bottom-8 left-1/2 -translate-x-1/2 w-[90%] bg-white/10 backdrop-blur-2xl px-6 py-4 rounded-[24px] flex justify-between items-center shadow-2xl border border-white/20"
-                                    >
-                                        <div className="space-y-1">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-ping" />
-                                                <span className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Live Integration</span>
-                                            </div>
-                                            <p className="text-[10px] text-white/50 font-bold uppercase tracking-[0.2em] ml-5">Ref: NEXUS_HUB_01</p>
-                                        </div>
-                                        <div className="flex -space-x-3">
-                                            {[1, 2, 3].map(i => (
-                                                <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-blue-600 flex items-center justify-center overflow-hidden">
-                                                    <span className="material-symbols-outlined text-white text-sm">hub</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </motion.div>
+
                                 </div>
                             </motion.div>
 
@@ -319,7 +343,7 @@ export default function Home() {
                                 variants={staggerContainer}
                                 initial="initial"
                                 animate="animate"
-                                className="relative w-full py-2"
+                                className="lg:col-span-5 relative w-full py-2"
                             >
                                 <motion.div variants={fadeInUp} className="mb-6">
                                     <div className="flex items-center gap-4 mb-6 overflow-hidden">
@@ -333,16 +357,16 @@ export default function Home() {
                                     </div>
 
                                     <h1 className="text-4xl md:text-6xl lg:text-[110px] font-black text-dark mb-10 leading-[0.95] tracking-tighter">
-                                        <RevealText text="Building your next" /> <br />
+                                        <RevealText text="Building our" /> <br />
 
                                         <RevealText text="Legacy." />
                                     </h1>
 
                                     <motion.p
                                         variants={fadeInUp}
-                                        className="text-sm md:text-base text-dark/40 font-medium leading-relaxed font-secondary max-w-md mb-6"
+                                        className="text-sm md:text-base text-dark/40 font-medium leading-relaxed font-secondary max-w-lg mb-10"
                                     >
-                                        RiseMate Venture operates at the nexus of institutional stability and regional opportunity, connecting global capital with high-growth entities.
+                                        We operate at the nexus of institutional stability and regional opportunity, bridging global capital with high-growth entities to secure your sovereign industrial future.
                                     </motion.p>
 
                                     <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 items-center">
@@ -382,7 +406,7 @@ export default function Home() {
                 </section>
 
                 {/* 2. ABOUT SECTION - SCROLL LIQUIDITY */}
-                <section id="about" className="py-40 md:py-64 bg-white relative overflow-hidden">
+                <section id="about" className="py-12 md:py-28 bg-white relative overflow-hidden">
                     {/* Background Orbs with subtle movement */}
                     <motion.div
                         animate={{
@@ -396,21 +420,21 @@ export default function Home() {
                     />
 
                     <div className="container-wide relative z-10">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-32 items-center">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
                             <motion.div
                                 variants={sectionAnimation}
                                 initial="initial"
                                 whileInView="whileInView"
-                                className="lg:col-span-12 mb-40"
+                                className="lg:col-span-12 mb-12"
                             >
-                                <div className="flex flex-col md:flex-row gap-24 items-end">
+                                <div className="flex flex-col md:flex-row gap-12 items-end">
                                     <div className="md:w-3/5">
                                         <SectionLabel>Strategic Nexus: NCR & Jaipur</SectionLabel>
                                         <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-dark leading-[1.1] tracking-tight">
                                             Architectural <br /><span className="text-blue-600">Precision</span> <br /> In Growth
                                         </h2>
                                     </div>
-                                    <div className="md:w-2/5 space-y-12">
+                                    <div className="md:w-2/5 space-y-8">
                                         <p className="text-2xl text-dark/60 font-secondary leading-tight italic border-l-4 border-blue-600/30 pl-10 py-4">
                                             Operating from our institutional hubs in <span className="text-dark font-black underline decoration-blue-500/40 underline-offset-8">Gurugram</span> and <span className="text-dark font-black underline decoration-blue-500/40 underline-offset-8">Jaipur</span>.
                                         </p>
@@ -441,6 +465,7 @@ export default function Home() {
                                             src="/corporate-interior.png"
                                             alt="Modern Gurgaon HQ"
                                             fill
+                                            sizes="(max-width: 1200px) 100vw, 60vw"
                                             className="object-cover transition-transform duration-[5000ms] group-hover:scale-110 ease-out"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-tr from-dark/60 via-transparent to-transparent pointer-events-none" />
@@ -461,7 +486,7 @@ export default function Home() {
                                     variants={staggerContainer}
                                     initial="initial"
                                     whileInView="animate"
-                                    className="lg:col-span-4 space-y-20"
+                                    className="lg:col-span-4 space-y-10"
                                 >
                                     <div className="space-y-6">
                                         <motion.h4 variants={fadeInUp} className="text-6xl md:text-8xl font-black text-dark tracking-tighter">04</motion.h4>
@@ -486,28 +511,31 @@ export default function Home() {
                 </section>
 
                 {/* 3. CORE VALUES - REFINED STACKS */}
-                <section className="py-40 md:py-64 bg-[#f8f9fa] relative overflow-hidden">
+                <section className="py-12 md:py-28 bg-[#f8f9fa] relative overflow-hidden">
                     <div className="container-wide relative z-10">
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-32 items-start">
                             <motion.div
                                 variants={sectionAnimation}
                                 initial="initial"
                                 whileInView="whileInView"
-                                className="lg:col-span-5 lg:sticky lg:top-40"
+                                className="lg:col-span-12"
                             >
-                                <SectionLabel>Core Principles</SectionLabel>
-                                <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-dark mb-10 leading-[1.1] tracking-tight">
-                                    Elevating <br />
-                                    <span className="text-blue-600 font-normal italic font-serif tracking-tight pr-4">Global</span> <br />
-                                    Standards
-                                </h2>
-                                <p className="text-2xl text-dark/40 font-secondary leading-tight max-w-sm mb-16">
-                                    We combine deep market expertise with a commitment to sustainable value creation.
-                                </p>
-                                <div className="hidden lg:block w-32 h-32 rounded-full border-4 border-dashed border-dark/5 animate-spin-slow" />
+                                <div className="flex flex-col md:flex-row gap-12 items-end mb-16">
+                                    <div className="md:w-3/5">
+                                        <SectionLabel>Core Principles</SectionLabel>
+                                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-dark leading-[1.1] tracking-tight">
+                                            Elevating <span className="text-blue-600 font-normal italic font-serif">Global</span> Standards
+                                        </h2>
+                                    </div>
+                                    <div className="md:w-2/5">
+                                        <p className="text-xl text-dark/40 font-secondary leading-tight italic border-l-4 border-blue-600/30 pl-8">
+                                            "We combine deep market expertise with a commitment to sustainable value creation."
+                                        </p>
+                                    </div>
+                                </div>
                             </motion.div>
 
-                            <div className="lg:col-span-7 space-y-16">
+                            <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                                 {[
                                     {
                                         title: "Our Vision",
@@ -530,15 +558,15 @@ export default function Home() {
                                         initial="initial"
                                         whileInView="whileInView"
                                         viewport={{ amount: 0.5 }}
-                                        className={`group p-16 md:p-24 bg-white rounded-[64px] border border-dark/5 transition-all duration-1000 ease-in-out hover:shadow-[0_80px_160px_-40px_rgba(0,18,51,0.1)]`}
+                                        className={`group p-10 md:p-14 bg-white rounded-[48px] border border-dark/5 transition-all duration-1000 ease-in-out hover:shadow-[0_40px_80px_-20px_rgba(0,18,51,0.05)]`}
                                     >
-                                        <div className="flex flex-col gap-12">
-                                            <div className={`w-28 h-28 rounded-[40px] flex items-center justify-center transition-all duration-700 bg-dark text-white group-hover:scale-110 group-hover:rotate-6`}>
-                                                <span className="material-symbols-outlined text-5xl">{card.icon}</span>
+                                        <div className="flex flex-col gap-8">
+                                            <div className={`w-16 h-16 rounded-[20px] flex items-center justify-center transition-all duration-700 bg-dark text-white group-hover:scale-110 group-hover:rotate-6`}>
+                                                <span className="material-symbols-outlined text-4xl">{card.icon}</span>
                                             </div>
                                             <div>
-                                                <h3 className="text-4xl font-black text-dark mb-8 tracking-tighter">{card.title}</h3>
-                                                <p className="text-3xl md:text-4xl text-dark/30 font-secondary leading-[1.1] italic transition-colors duration-700 group-hover:text-dark/80">
+                                                <h3 className="text-2xl font-black text-dark mb-4 tracking-tighter">{card.title}</h3>
+                                                <p className="text-lg md:text-xl text-dark/30 font-secondary leading-tight italic transition-colors duration-700 group-hover:text-dark/80">
                                                     "{card.desc}"
                                                 </p>
                                             </div>
@@ -555,13 +583,13 @@ export default function Home() {
                 </section>
 
                 {/* 4. LEADERSHIP - ARCHITECTS STAGGER */}
-                <section className="py-40 md:py-64 bg-white overflow-hidden">
+                <section className="py-12 md:py-28 bg-white overflow-hidden">
                     <div className="container-wide">
                         <motion.div
                             variants={sectionAnimation}
                             initial="initial"
                             whileInView="whileInView"
-                            className="flex flex-col md:flex-row justify-between items-end mb-40 lg:mb-56"
+                            className="flex flex-col md:flex-row justify-between items-end mb-16 lg:mb-20"
                         >
                             <div className="max-w-4xl">
                                 <SectionLabel>Executive Governance</SectionLabel>
@@ -578,7 +606,7 @@ export default function Home() {
                             variants={staggerContainer}
                             initial="initial"
                             whileInView="animate"
-                            className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16"
+                            className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 max-w-6xl mx-auto"
                         >
                             {founders.map((founder, idx) => (
                                 <FounderCard key={idx} founder={founder} />
@@ -588,7 +616,7 @@ export default function Home() {
                 </section>
 
                 {/* 5. PORTFOLIO - CINEMATIC IMMERSION */}
-                <section id="portfolio" className="py-40 md:py-64 bg-[#fdfdfd] overflow-hidden relative">
+                <section id="portfolio" className="py-12 md:py-28 bg-[#fdfdfd] overflow-hidden relative">
                     {/* Background Grids */}
                     <div className="absolute inset-0 grid grid-cols-12 opacity-[0.03] pointer-events-none">
                         {[...Array(12)].map((_, i) => (
@@ -598,7 +626,7 @@ export default function Home() {
 
                     <div className="container-wide relative z-10">
                         {/* Section Header */}
-                        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 items-end mb-40 md:mb-80">
+                        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 items-end mb-16 md:mb-24">
                             <div className="lg:col-span-9 w-full">
                                 <motion.div variants={sectionAnimation} initial="initial" whileInView="whileInView">
                                     <SectionLabel>Portfolio Spotlight</SectionLabel>
@@ -609,18 +637,40 @@ export default function Home() {
                                     </h2>
                                 </motion.div>
                             </div>
-                            <div className="lg:col-span-3 lg:text-right w-full">
-                                <motion.div variants={fadeInUp}>
-                                    <Link href="/portfolio" className="group relative inline-flex items-center gap-6 bg-dark text-white px-12 py-7 rounded-[32px] text-[12px] font-black uppercase tracking-[0.4em] overflow-hidden transition-all duration-700 hover:scale-105">
-                                        <span className="relative z-10">Full Directory</span>
-                                        <div className="absolute inset-0 bg-blue-600 translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
-                                    </Link>
-                                </motion.div>
-                            </div>
                         </div>
 
+                        {/* Sovereign Brand Banner */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            className="bg-white border border-dark/5 p-10 md:p-14 rounded-[40px] md:rounded-[60px] mb-20 shadow-[0_40px_100px_-20px_rgba(0,18,51,0.08)] flex flex-col md:flex-row items-center justify-between gap-12 group overflow-hidden relative"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/[0.03] to-transparent pointer-events-none" />
+                            <div className="flex items-center gap-10 relative z-10">
+                                <Link href="/" className="relative w-48 h-12 grayscale group-hover:grayscale-0 transition-all duration-1000">
+                                    <Image src="/logo.png" alt="RiseMate Venture" fill className="object-contain object-left" />
+                                </Link>
+                                <div className="h-10 w-[1px] bg-dark/10 hidden md:block" />
+                                <p className="text-[11px] font-black uppercase tracking-[0.5em] text-dark/30 leading-tight">
+                                    Overarching <br /> Sovereign Entity
+                                </p>
+                            </div>
+                            <div className="flex items-center gap-10 relative z-10">
+                                <div className="hidden lg:flex gap-4">
+                                    {[1, 2, 3, 4].map((i) => (
+                                        <div key={i} className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }} />
+                                    ))}
+                                </div>
+                                <Link href="/portfolio" className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600 bg-blue-50 px-8 py-4 rounded-full hover:bg-dark hover:text-white transition-all duration-700">
+                                    Sovereign Directory
+                                </Link>
+                            </div>
+                        </motion.div>
+
                         {/* Portfolio List with extreme scroll depth */}
-                        <div className="flex flex-col gap-40 md:gap-80">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-7xl mx-auto">
                             {portfolioItems.map((item, idx) => (
                                 <PortfolioItem key={idx} item={item} index={idx} />
                             ))}
@@ -628,19 +678,8 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* 6. CTA SECTION - PERSPECTIVE SHIFT */}
-                <section className="py-64 md:py-96 bg-dark text-white overflow-hidden relative">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 2 }}
-                        className="absolute inset-0 bg-[radial-gradient(circle_at_center,#2563eb44,transparent_70%)] pointer-events-none"
-                    />
-
-                    {/* Floating elements for depth */}
-                    <div className="absolute top-20 right-20 w-32 h-32 border-2 border-white/5 rounded-full animate-spin-slow" />
-                    <div className="absolute bottom-40 left-10 w-64 h-64 border border-white/5 rounded-full animate-pulse" />
-
+                {/* 6. CTA SECTION - LIGHT INTEGRATION */}
+                <section className="py-12 md:py-28 bg-white text-dark overflow-hidden relative border-t border-dark/5">
                     <div className="container-wide relative z-10 text-center">
                         <motion.div
                             variants={sectionAnimation}
@@ -649,19 +688,18 @@ export default function Home() {
                         >
                             <SectionLabel>Nexus Collective</SectionLabel>
                             <h2 className="text-4xl md:text-7xl lg:text-9xl font-black mb-16 tracking-tight leading-[1.1]">
-                                Ready to build <br /> the <span className="text-blue-500 font-normal italic font-serif">Nexus?</span>
+                                Ready to build <br /> the <span className="text-blue-600 font-normal italic font-serif">Nexus?</span>
                             </h2>
-                            <p className="text-2xl md:text-3xl text-white/40 font-secondary max-w-3xl mx-auto mb-24 px-6 leading-tight">
+                            <p className="text-2xl md:text-3xl text-dark/30 font-secondary max-w-3xl mx-auto mb-24 px-6 leading-tight">
                                 Join a circle of institutional excellence and high-velocity growth in India's leading economic hubs.
                             </p>
 
                             <div className="flex flex-col md:flex-row items-center justify-center gap-10">
-                                <Link href="/contact" className="group relative bg-blue-600 text-white px-20 py-8 rounded-[40px] text-xs font-black uppercase tracking-[0.5em] overflow-hidden transition-all duration-700 hover:scale-110 shadow-[0_40px_80px_-20px_rgba(37,99,235,0.4)]">
+                                <Link href="/contact" className="group relative bg-dark text-white px-20 py-8 rounded-[40px] text-xs font-black uppercase tracking-[0.5em] overflow-hidden transition-all duration-700 hover:scale-110 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)]">
                                     <span className="relative z-10">Initialize Partnership</span>
-                                    <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out" />
-                                    <div className="absolute inset-0 bg-dark scale-0 group-hover:scale-100 transition-transform duration-700 delay-100 rounded-full" />
+                                    <div className="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out" />
                                 </Link>
-                                <Link href="/about" className="group bg-white/5 backdrop-blur-xl border border-white/10 text-white px-20 py-8 rounded-[40px] text-xs font-black uppercase tracking-[0.5em] hover:bg-white hover:text-dark transition-all duration-1000">
+                                <Link href="/about" className="group bg-dark/5 backdrop-blur-xl border border-dark/10 text-dark px-20 py-8 rounded-[40px] text-xs font-black uppercase tracking-[0.5em] hover:bg-dark hover:text-white transition-all duration-1000">
                                     Institutional Dossier
                                 </Link>
                             </div>

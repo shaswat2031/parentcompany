@@ -106,10 +106,30 @@ export default function About() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                             {[
-                                { name: "BWorth", sector: "Sustainable Fashion", desc: "Circular luxury & technical upcycling." },
-                                { name: "Vega Vrudhi", sector: "Execution Architecture", desc: "Managed sales & national growth." },
-                                { name: "RYM Grenergy", sector: "Deep-Tech", desc: "Clean energy & AI infrastructure." },
-                                { name: "Synchronous", sector: "Digital Marketing", desc: "High-velocity brand identities." }
+                                { 
+                                    name: "BWorth", 
+                                    sector: "Sustainable Fashion", 
+                                    desc: "Revolutionizing the fashion industry through a unique circular luxury ecosystem. Buy, sell, and recycle fashion while earning rewards through our unique buyback program that preserves the planet's beauty.",
+                                    logo: "/BWORTH.jpg"
+                                },
+                                { 
+                                    name: "Vega Vrudhi", 
+                                    sector: "Execution Architecture", 
+                                    desc: "Precision execution architecture bridging the gap between digital leads and on-ground reality. We deploy trained field teams to accelerate market presence for national growth engines.",
+                                    logo: "/VEGA.png"
+                                },
+                                { 
+                                    name: "RYM Grenergy", 
+                                    sector: "Deep-Tech", 
+                                    desc: "Enabling a carbon-neutral future by developing the world’s greenest battery cell and intelligent green-tech infrastructure through AI, IoT, and Smart Automation.",
+                                    logo: "https://rymgrenergy.com/_next/image?url=%2Fimages%2Flogo.png&w=128&q=75"
+                                },
+                                { 
+                                    name: "Synchronous", 
+                                    sector: "Digital Marketing", 
+                                    desc: "Architecting high-velocity digital ecosystems for high-growth elite brands. We build vertically integrated brand identities and compound ROI via algorithmic process automation.",
+                                    logo: "/sync.jpg"
+                                }
                             ].map((entity, idx) => (
                                 <motion.div 
                                     key={idx} 
@@ -120,10 +140,17 @@ export default function About() {
                                     transition={{ delay: idx * 0.1 }}
                                     className="group p-12 bg-[#f8f9fa] border border-transparent hover:border-dark/5 hover:bg-white hover:shadow-2xl transition-all duration-700 rounded-[40px]"
                                 >
-                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600/50 block mb-6">Entity 0{idx + 1}</span>
+                                    <div className="flex items-center justify-between gap-4 mb-6">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600/50 block">Entity 0{idx + 1}</span>
+                                        {entity.logo && (
+                                            <div className={`w-12 h-12 ${entity.name === 'Synchronous' ? 'bg-zinc-950' : 'bg-white'} rounded-lg p-2 border border-dark/5 shadow-sm overflow-hidden flex items-center justify-center`}>
+                                                <Image src={entity.logo} alt={entity.name} width={32} height={32} className="object-contain" unoptimized={true} />
+                                            </div>
+                                        )}
+                                    </div>
                                     <h4 className="text-3xl font-black text-dark mb-4">{entity.name}</h4>
-                                    <p className="text-xs font-bold text-gold uppercase tracking-widest mb-8">{entity.sector}</p>
-                                    <p className="text-sm text-dark/40 font-secondary leading-relaxed italic border-t border-dark/5 pt-8">{entity.desc}</p>
+                                    <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-8">{entity.sector}</p>
+                                    <p className="text-[11px] text-dark/60 font-secondary leading-relaxed border-t border-dark/5 pt-8">{entity.desc}</p>
                                 </motion.div>
                             ))}
                         </div>
