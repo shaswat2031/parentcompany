@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import Magnetic from "./Magnetic";
 
 const navLinks = [
   { name: "About", href: "/about" },
@@ -84,17 +85,19 @@ export default function Navbar() {
                 }}
                 transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               >
-                <Link
-                  href={link.href}
-                  className={`group relative text-[11px] font-black uppercase tracking-[0.4em] transition-colors duration-700 ${isTransparent && !isLightPage ? "text-white/70 hover:text-white" : "text-dark/60 hover:text-blue-600"
-                    }`}
-                >
-                  <span className="relative z-10">{link.name}</span>
-                  <motion.span
-                    className={`absolute -bottom-2 left-0 w-0 h-[2px] transition-all duration-700 group-hover:w-full ${isTransparent && !isLightPage ? "bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]" : "bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+                <Magnetic>
+                  <Link
+                    href={link.href}
+                    className={`group relative text-[11px] font-black uppercase tracking-[0.4em] transition-colors duration-700 py-2 ${isTransparent && !isLightPage ? "text-white/70 hover:text-white" : "text-dark/60 hover:text-#002366"
                       }`}
-                  />
-                </Link>
+                  >
+                    <span className="relative z-10">{link.name}</span>
+                    <motion.span
+                      className={`absolute -bottom-1 left-0 w-0 h-[2px] transition-all duration-700 group-hover:w-full ${isTransparent && !isLightPage ? "bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]" : "bg-#002366 shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+                        }`}
+                    />
+                  </Link>
+                </Magnetic>
               </motion.div>
             ))}
           </motion.div>
@@ -107,16 +110,18 @@ export default function Navbar() {
             className={`flex items-center gap-10 pl-14 border-l h-6 ${isTransparent && !isLightPage ? "border-white/10" : "border-dark/10"
               }`}
           >
-            <Link
-              href="/contact"
-              className={`group relative text-[11px] font-black uppercase tracking-[0.5em] transition-all duration-700 ${isTransparent && !isLightPage ? "text-white hover:opacity-80" : "text-dark hover:text-blue-600"
-                }`}
-            >
-              <span className="flex items-center gap-3">
-                Join NEXUS
-                <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform duration-500">arrow_forward</span>
-              </span>
-            </Link>
+            <Magnetic>
+              <Link
+                href="/contact"
+                className={`group relative text-[11px] font-black uppercase tracking-[0.5em] transition-all duration-700 ${isTransparent && !isLightPage ? "text-white hover:opacity-80" : "text-dark hover:text-#002366"
+                  }`}
+              >
+                <span className="flex items-center gap-3">
+                  Join NEXUS
+                  <span className="material-symbols-outlined text-sm group-hover:translate-x-2 transition-transform duration-500">arrow_forward</span>
+                </span>
+              </Link>
+            </Magnetic>
           </motion.div>
         </div>
 
