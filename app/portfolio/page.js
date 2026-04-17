@@ -68,31 +68,111 @@ export default function Portfolio() {
 
             <main className="pt-24">
                 {/* HERO */}
-                <section className="py-16 md:py-24 px-6 md:px-24">
-                    <div className="max-w-screen-2xl mx-auto">
+                <section className="relative py-20 md:py-32 px-6 md:px-24 overflow-hidden">
+                    {/* Background Gradients */}
+                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50 rounded-full blur-[120px] -z-10 opacity-70" />
+                    <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-50 rounded-full blur-[120px] -z-10 opacity-50" />
+                    
+                    <div className="max-w-screen-2xl mx-auto relative z-10">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -30 }}
-                            viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 1 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center"
                         >
-                            <span className="text-xs font-black uppercase tracking-[0.6em] text-blue-600 mb-8 block">Sovereign Registry</span>
-                            <h1 className="text-6xl md:text-[8rem] font-black leading-[0.85] text-dark tracking-tighter mb-12">
-                                Institutional <br />
-                                <span className="text-dark/20 italic">Portfolio.</span>
-                            </h1>
-                            <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-l-[4px] border-blue-600 pl-12 py-6">
-                                <p className="text-xl md:text-3xl text-dark/60 font-secondary max-w-2xl">
-                                    A legacy of strategic allocation across four high-velocity sectors. Each entity operates as a sovereign architectural unit under the RiseMate banner.
-                                </p>
+                            {/* Text Area */}
+                            <div className="lg:col-span-7">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                    className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white border border-dark/5 shadow-sm mb-10"
+                                >
+                                    <span className="relative flex h-2.5 w-2.5">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-600"></span>
+                                    </span>
+                                    <span className="text-[11px] font-black uppercase tracking-[0.4em] text-dark/70">Sovereign Registry</span>
+                                </motion.div>
 
-                                <div className="flex flex-col items-start md:items-end gap-6 bg-dark/[0.03] p-10 rounded-[40px] border border-dark/5 shadow-2xl backdrop-blur-xl">
-                                    <div className="relative w-48 h-12 grayscale hover:grayscale-0 transition-all duration-1000">
-                                        <Image src="/logo.png" alt="RiseMate Venture" fill className="object-contain object-left md:object-right" />
+                                <h1 className="text-6xl md:text-[7rem] lg:text-[8.5rem] font-black leading-[0.85] text-dark tracking-tighter mb-10 group">
+                                    Institutional <br />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-dark to-dark/30 italic pr-4">Portfolio.</span>
+                                </h1>
+
+                                <div className="relative pl-8 md:pl-12">
+                                    <div className="absolute top-0 left-0 w-[3px] h-full bg-dark/10">
+                                        <motion.div 
+                                            initial={{ height: 0 }}
+                                            animate={{ height: "100%" }}
+                                            transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+                                            className="w-full bg-blue-600"
+                                        />
                                     </div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 text-left md:text-right">Overarching <br /> Sovereign Entity</p>
+                                    <p className="text-xl md:text-2xl text-dark/60 font-secondary max-w-xl leading-relaxed">
+                                        A legacy of strategic allocation across four high-velocity sectors. Each entity operates as a sovereign architectural unit under the RiseMate banner.
+                                    </p>
                                 </div>
+                            </div>
+
+                            {/* Graphic / Card Area */}
+                            <div className="lg:col-span-5 relative mt-8 lg:mt-0">
+                                <motion.div 
+                                    initial={{ opacity: 0, rotateX: 20, y: 50 }}
+                                    whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
+                                    transition={{ duration: 1, delay: 0.3 }}
+                                    className="relative w-full aspect-square md:aspect-[4/3] rounded-[40px] bg-white border border-dark/5 shadow-[0_30px_100px_-20px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col justify-between group"
+                                    style={{ perspective: "1000px" }}
+                                >
+                                    {/* Grid background */}
+                                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] opacity-100 group-hover:opacity-50 transition-opacity duration-1000"></div>
+
+                                    {/* Top Header inside Card */}
+                                    <div className="relative z-10 flex justify-between items-start p-8 md:p-10">
+                                        <div className="w-14 h-14 rounded-2xl bg-dark shadow-xl flex items-center justify-center rotate-[-15deg] group-hover:rotate-0 transition-transform duration-700">
+                                            <span className="material-symbols-outlined text-white text-2xl">account_balance</span>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="inline-flex items-center gap-2 bg-dark/5 px-3 py-1.5 rounded-full mb-2">
+                                                <span className="text-[9px] font-black uppercase tracking-widest text-dark/60">Entity Count</span>
+                                                <span className="text-xs font-black text-dark bg-white px-2 py-0.5 rounded-full shadow-sm">04</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Center Logo Area */}
+                                    <div className="relative z-10 flex flex-col items-center justify-center flex-grow group-hover:scale-105 transition-transform duration-1000">
+                                        <div className="relative w-52 md:w-64 h-16 mb-4 filter drop-shadow-xl">
+                                            <Image src="/logo.png" alt="RiseMate Venture" fill className="object-contain" />
+                                        </div>
+                                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30">Master Holding Company</p>
+                                    </div>
+
+                                    {/* Bottom Footer inside Card */}
+                                    <div className="relative z-10 border-t border-dark/5 p-8 md:p-10 bg-gradient-to-t from-dark/[0.02] to-transparent">
+                                         <div className="flex items-end justify-between">
+                                            <div>
+                                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-dark/40 mb-2">Status</p>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="relative flex h-2 w-2">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                                    </span>
+                                                    <p className="text-sm font-bold text-dark">Active</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-dark/40 mb-2">Architecture</p>
+                                                <p className="text-sm font-bold text-dark">Overarching</p>
+                                            </div>
+                                         </div>
+                                    </div>
+                                    
+                                    {/* Shine effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/50 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -translate-x-full group-hover:translate-x-full ease-in-out"></div>
+                                </motion.div>
                             </div>
                         </motion.div>
                     </div>

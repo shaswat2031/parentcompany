@@ -48,6 +48,16 @@ const leaders = [
         logoBg: "bg-white",
         image: "/devam .jpeg",
         id: "04"
+    },
+    {
+        name: "Aryan",
+        role: "Strategic Partner · Global Growth",
+        vision: "Integrating emerging market opportunities with core institutional values for sustained expansion.",
+        focus: "Strategic Alliances, Market Expansion & Operational Scalability.",
+        philosophy: "Expanding industrial footprints through collaborative strategic alliance and market intelligence.",
+        logo: "/logo.png",
+        image: "/aryan.png",
+        id: "05"
     }
 ];
 

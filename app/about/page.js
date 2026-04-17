@@ -14,46 +14,88 @@ export default function About() {
 
             <main className="pt-20">
                 {/* 1. HERO SECTION */}
-                <section className="py-24 md:py-40 px-6 md:px-24 relative overflow-hidden">
-                    {/* Subtle grid background */}
-                    <div className="absolute inset-0 grid grid-cols-12 opacity-[0.03] pointer-events-none">
-                        {[...Array(12)].map((_, i) => (
-                            <div key={i} className="border-r border-dark h-full"></div>
-                        ))}
+                <section className="relative pt-32 pb-24 md:pt-48 md:pb-40 px-6 md:px-12 lg:px-24 overflow-hidden border-b border-dark/5 bg-[#fafafa]">
+                    {/* Architectural Mesh Background */}
+                    <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none" />
+
+                    {/* Massive Outline Text Background */}
+                    <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0">
+                        <motion.h2 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 2, ease: "easeOut" }}
+                            className="text-[15vw] font-black text-transparent uppercase tracking-tighter" style={{ WebkitTextStroke: "2px rgba(0,35,102,0.05)" }}>
+                            RISEMATE
+                        </motion.h2>
                     </div>
 
-                    {/* Ambient glow */}
-                    <div className="absolute -top-40 -right-40 w-[700px] h-[700px] bg-[#002366]/5 blur-[180px] rounded-full pointer-events-none" />
+                    <div className="max-w-screen-2xl mx-auto relative z-10 w-full">
+                        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-16 lg:gap-24 w-full">
+                            
+                            {/* Left Text Block */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                                className="flex-1"
+                            >
+                                <div className="inline-flex items-center gap-6 mb-12">
+                                    <div className="h-[1px] w-20 bg-blue-600/30 relative overflow-hidden">
+                                        <motion.div initial={{ x: "-100%" }} animate={{ x: "0%" }} transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }} className="absolute top-0 left-0 w-full h-full bg-blue-600" />
+                                    </div>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.6em] text-blue-600">About the Portal</span>
+                                </div>
+                                
+                                <h1 className="text-6xl md:text-[6.5rem] xl:text-[8.5rem] font-black leading-[0.85] text-dark tracking-tighter mb-8">
+                                    The Sovereign<br />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-blue-900 to-dark opacity-90 pr-4">Legacy.</span>
+                                </h1>
+                            </motion.div>
 
-                    <div className="max-w-screen-2xl mx-auto relative z-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                            <div className="flex items-center gap-4 mb-12">
-                                <span className="w-12 h-[1px] bg-[#002366]/30"></span>
-                                <span className="text-xs font-black uppercase tracking-[0.6em] text-[#002366]">About the Portal</span>
-                            </div>
+                            {/* Right Descriptor Block */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                                className="flex-1 lg:max-w-xl pb-6 border-l-[2px] border-blue-600/20 pl-8 lg:pl-16 relative"
+                            >
+                                {/* Vertical Animated Line Overlay */}
+                                <motion.div 
+                                    initial={{ height: 0 }} 
+                                    animate={{ height: "100%" }} 
+                                    transition={{ duration: 1.5, delay: 0.8, ease: "easeInOut" }} 
+                                    className="absolute top-0 -left-[2px] w-[2px] bg-blue-600" 
+                                />
 
-                            <h1 className="text-5xl md:text-[7rem] font-black leading-[0.85] text-dark tracking-tighter mb-16">
-                                The Sovereign <br />
-                                <span className="text-[#002366] italic font-serif font-normal">Digital</span> Legacy.
-                            </h1>
+                                <div className="hidden lg:flex w-14 h-14 mb-10 rounded-full border border-dark/10 items-center justify-center bg-white shadow-md">
+                                    <span className="material-symbols-outlined text-dark text-2xl font-light">language</span>
+                                </div>
 
-                            <div className="max-w-4xl border-l-[3px] border-[#002366] pl-12 md:pl-20 py-4">
-                                <p className="text-xl md:text-3xl text-dark/40 font-secondary leading-tight italic">
-                                    RiseMate Venture catalysts economic development by connecting global institutional expertise with high-growth entities across fashion, tech, energy, and digital markets.
+                                <p className="text-xl md:text-3xl text-dark/60 font-secondary leading-snug">
+                                    RiseMate Venture catalysts economic development by connecting global institutional expertise with high-growth entities across <span className="font-bold text-dark">fashion, tech, energy,</span> and <span className="font-bold text-dark">digital sectors.</span>
                                 </p>
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Decorative Background Text */}
-                    <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 text-[30vw] font-black text-dark/[0.02] select-none pointer-events-none uppercase leading-none">
-                        Legacy
+                                
+                                <div className="mt-14 flex flex-col sm:flex-row sm:items-center gap-6">
+                                    <div className="flex -space-x-4">
+                                        <div className="w-12 h-12 rounded-full border-[3px] border-[#fafafa] bg-emerald-50 text-emerald-600 shadow-lg flex items-center justify-center z-[1]">
+                                            <span className="material-symbols-outlined text-base">eco</span>
+                                        </div>
+                                        <div className="w-12 h-12 rounded-full border-[3px] border-[#fafafa] bg-dark text-white shadow-lg flex items-center justify-center z-[2]">
+                                            <span className="material-symbols-outlined text-base">precision_manufacturing</span>
+                                        </div>
+                                        <div className="w-12 h-12 rounded-full border-[3px] border-[#fafafa] bg-blue-600 text-white shadow-lg flex items-center justify-center z-[3]">
+                                            <span className="material-symbols-outlined text-base">data_object</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-dark">Multi-Sector Integration</span>
+                                        <span className="text-[9px] font-bold text-dark/40 uppercase tracking-widest mt-1">Cross-Industry Expertise</span>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
                 </section>
 

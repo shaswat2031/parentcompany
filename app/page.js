@@ -315,93 +315,78 @@ const PortfolioItem = ({ item, index }) => {
     );
 };
 
-const FounderCard = ({ founder }) => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: false, amount: 0.1 });
-
+const FounderCard = ({ founder, isSmall }) => {
     return (
         <motion.div
-            ref={ref}
-            variants={fadeInUp}
-            className="group relative bg-white border border-dark/5 rounded-[48px] overflow-hidden hover:border-[#002366]/30 transition-all duration-1000 flex flex-col shadow-[0_40px_100px_-20px_rgba(0,18,51,0.04)] hover:shadow-[0_80px_160px_-40px_rgba(0,35,102,0.1)]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className={`group relative bg-[#FAF9F6] rounded-[32px] overflow-hidden flex flex-col h-full border border-dark/5 shadow-[0_10px_40px_-15px_rgba(0,18,51,0.05)] hover:shadow-[0_40px_80px_-20px_rgba(0,18,51,0.12)] transition-all duration-700 ${isSmall ? 'scale-[0.95] origin-top' : ''}`}
         >
-            {/* Top: Image Space - LARGE */}
-            <div className="relative h-[600px] w-full bg-[#001233] overflow-hidden">
+            {/* ── Image Section ── */}
+            <div className={`relative ${isSmall ? 'aspect-square' : 'aspect-[4/5]'} overflow-hidden`}>
                 <Image
                     src={founder.image}
                     alt={founder.name}
                     fill
-                    className="object-cover object-top transition-all duration-1000 scale-100 group-hover:scale-110"
-                    style={{ color: 'transparent' }}
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-1000"
+                    unoptimized={true}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001233]/80 via-transparent to-transparent" />
-
+                
+                {/* Overlays */}
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-dark/95 via-dark/40 to-transparent" />
+                
                 {/* Executive Tier Badge */}
-                <div className="absolute top-8 left-8 z-20">
-                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-2 rounded-full">
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">
+                <div className="absolute top-6 left-6">
+                    <div className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full">
+                        <span className="text-[8px] font-black uppercase tracking-[0.3em] text-white/90">
                             {founder.tier}
                         </span>
                     </div>
                 </div>
 
-                {/* Name overlay at bottom of image */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
-                    <div className="flex justify-between items-end">
-                        <div>
-                            <h3 className="text-3xl lg:text-4xl font-black text-white tracking-tighter leading-none mb-1 drop-shadow-lg">
-                                {founder.name}
-                            </h3>
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">
-                                {founder.role}
-                            </p>
-                        </div>
-                        {founder.logo && (
-                            <div className="w-12 h-12 rounded-xl border border-white/20 p-2 flex items-center justify-center bg-white shadow-xl">
-                                <Image src={founder.logo} alt="Company Logo" width={32} height={32} className="object-contain" unoptimized={true} />
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Profile Content */}
-            <div className="p-10 flex flex-col gap-8">
-                <div>
-                    <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-4">Operational Mandate</h4>
-                    <p className="text-xl font-semibold text-dark leading-snug italic border-l-4 border-[#002366]/40 pl-6 py-1">
-                        "{founder.philosophy}"
+                {/* Name & Role Overlay */}
+                <div className="absolute bottom-6 left-8 right-8 z-10 transition-transform duration-700 group-hover:-translate-y-2">
+                    <h3 className={`${isSmall ? 'text-2xl' : 'text-3xl md:text-4xl'} font-black text-white tracking-tighter leading-none mb-1`}>
+                        {founder.name}
+                    </h3>
+                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 italic">
+                        {founder.role.split('·')[0]} · <span className="text-white/60">{founder.role.split('·')[1]}</span>
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-dark/5">
-                    <div>
-                        <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#002366]/60 mb-3">Strategic Vision</h5>
-                        <p className="text-base text-dark/60 leading-relaxed">
-                            {founder.vision}
-                        </p>
+                {/* Logo Badge */}
+                {founder.logo && (
+                    <div className={`absolute ${isSmall ? 'bottom-4 right-4' : 'bottom-6 right-6'} z-20`}>
+                        <div className={`${isSmall ? 'w-8 h-8' : 'w-10 h-10'} ${founder.logoBg || "bg-white"} rounded-xl shadow-xl p-2 border border-dark/5 flex items-center justify-center group-hover:rotate-12 transition-all duration-700`}>
+                            <Image src={founder.logo} alt="Company Logo" width={isSmall ? 20 : 28} height={isSmall ? 20 : 28} className="object-contain" unoptimized={true} />
+                        </div>
                     </div>
-                    <div>
-                        <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-dark/40 mb-3">Core Focus</h5>
-                        <p className="text-base text-dark/60 leading-relaxed">
-                            {founder.focus}
+                )}
+            </div>
+
+            {/* ── Content Section ── */}
+            <div className={`${isSmall ? 'p-6' : 'p-8 md:p-10'} flex flex-col flex-grow`}>
+                {/* Operational Mandate */}
+                <div className={`${isSmall ? 'mb-4' : 'mb-8'}`}>
+                    <h5 className="text-[8px] font-black uppercase tracking-[0.35em] text-dark/25 mb-4 uppercase">Operational Mandate</h5>
+                    <div className="border-l-2 border-blue-600/30 pl-5">
+                        <p className={`${isSmall ? 'text-xs' : 'text-sm md:text-[15px]'} text-dark/70 font-medium leading-relaxed italic`}>
+                            "{founder.philosophy}"
                         </p>
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-6 border-t border-dark/5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.5)] animate-pulse" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-dark/40">Verified Institutional Lead</span>
+                <div className={`mt-auto pt-8 border-t border-dark/5 grid ${isSmall ? 'grid-cols-1 gap-4' : 'grid-cols-2 gap-6'}`}>
+                    <div>
+                        <h5 className="text-[8px] font-black uppercase tracking-[0.35em] text-dark/25 mb-3 uppercase">Strategic Vision</h5>
+                        <p className={`text-[11px] text-dark/45 leading-relaxed ${isSmall ? 'line-clamp-2' : 'line-clamp-3'}`}>{founder.vision}</p>
                     </div>
-                    <Magnetic>
-                        <Link href="/contact" className="group/btn flex items-center gap-4">
-                            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-dark">Connect</span>
-                            <div className="w-11 h-11 rounded-full border border-dark/10 flex items-center justify-center group-hover/btn:bg-[#002366] group-hover/btn:text-white group-hover/btn:border-none transition-all duration-500">
-                                <span className="material-symbols-outlined text-base">north_east</span>
-                            </div>
-                        </Link>
-                    </Magnetic>
+                    <div>
+                        <h5 className="text-[8px] font-black uppercase tracking-[0.35em] text-dark/25 mb-3 uppercase">Core Focus</h5>
+                        <p className={`text-[11px] text-dark/45 leading-relaxed ${isSmall ? 'line-clamp-2' : 'line-clamp-3'}`}>{founder.focus}</p>
+                    </div>
                 </div>
             </div>
         </motion.div>
@@ -448,6 +433,16 @@ const founders = [
         focus: "Brand Identity Architecture, Autonomous AI Agents & Predictive Growth Modeling.",
         logo: "/sync.jpg",
         image: "/devam .jpeg"
+    },
+    {
+        tier: "Executive Tier 005",
+        name: "Aryan",
+        role: "Strategic Partner · Global Growth",
+        philosophy: "Expanding industrial footprints through collaborative strategic alliance and market intelligence.",
+        vision: "Integrating emerging market opportunities with core institutional values for sustained expansion.",
+        focus: "Strategic Alliances, Market Expansion & Operational Scalability.",
+        logo: "/logo.png",
+        image: "/aryan.png"
     }
 ];
 
@@ -686,10 +681,10 @@ export default function Home() {
                                             <motion.p variants={fadeInUp} className="text-[10px] font-black text-dark/30 uppercase tracking-[0.5em]">Sovereign Entities Integrated</motion.p>
                                         </div>
                                         <div className="space-y-4">
-                                            <motion.h4 variants={fadeInUp} className="text-5xl md:text-7xl font-black text-dark tracking-tighter">
+                                            <h4 className="text-5xl md:text-7xl font-black text-dark tracking-tighter">
                                                 <Counter value={10000} />+
-                                            </motion.h4>
-                                            <motion.p variants={fadeInUp} className="text-[10px] font-black text-dark/30 uppercase tracking-[0.5em]">Growth Optimization Cycles</motion.p>
+                                            </h4>
+                                            <p className="text-[10px] font-black text-dark/30 uppercase tracking-[0.5em]">Growth Optimization Cycles</p>
                                         </div>
                                         <motion.div variants={fadeInUp}>
                                             <Link href="/about" className="inline-flex items-center gap-4 group">
@@ -796,13 +791,13 @@ export default function Home() {
 
                 {/* 4. LEADERSHIP - ARCHITECTS STAGGER */}
                 <ScrollReveal>
-                    <section className="py-8 md:py-16 bg-white overflow-hidden">
+                    <section className="py-20 md:py-32 bg-white overflow-hidden">
                         <div className="container-wide">
                             <motion.div
                                 variants={sectionAnimation}
                                 initial="initial"
                                 whileInView="whileInView"
-                                className="flex flex-col md:flex-row justify-between items-end mb-8 lg:mb-12"
+                                className="flex flex-col md:flex-row justify-between items-end mb-8 lg:mb-16"
                             >
                                 <div className="max-w-4xl">
                                     <SectionLabel>Registry Governance</SectionLabel>
@@ -815,16 +810,21 @@ export default function Home() {
                                 </p>
                             </motion.div>
 
-                            <motion.div
-                                variants={staggerContainer}
-                                initial="initial"
-                                whileInView="animate"
-                                className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 max-w-7xl mx-auto"
-                            >
-                                {founders.map((founder, idx) => (
-                                    <FounderCard key={idx} founder={founder} />
-                                ))}
-                            </motion.div>
+                            <div className="space-y-12">
+                                {/* First Row: Top Leadership (Large) */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 max-w-7xl mx-auto">
+                                    {founders.slice(0, 2).map((founder, idx) => (
+                                        <FounderCard key={idx} founder={founder} />
+                                    ))}
+                                </div>
+
+                                {/* Second Row: Executive Team (Compact) */}
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                                    {founders.slice(2).map((founder, idx) => (
+                                        <FounderCard key={idx + 2} founder={founder} isSmall={true} />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </ScrollReveal>
