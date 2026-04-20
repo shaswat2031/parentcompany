@@ -284,8 +284,8 @@ const LeaderRow = ({ leader, reverse }) => {
                 </p>
 
                 {/* Philosophy quote */}
-                <div className={`mb-10 max-w-xl ${reverse ? "border-r-2 pr-8" : "border-l-2 pl-8"} border-blue-600/25`}>
-                    <p className="text-lg md:text-xl text-dark/65 font-medium leading-relaxed italic">
+                <div className={`mb-10 max-w-xl ${reverse ? "border-r-2 pr-8" : "border-l-2 pl-8"} border-blue-600/30`}>
+                    <p className="text-lg md:text-xl text-dark/80 font-medium leading-relaxed italic">
                         "{leader.philosophy}"
                     </p>
                 </div>
@@ -293,12 +293,12 @@ const LeaderRow = ({ leader, reverse }) => {
                 {/* Vision + Focus grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full max-w-xl mb-12">
                     <div>
-                        <h5 className="text-[9px] font-black uppercase tracking-[0.35em] text-blue-600/60 mb-3">Strategic Vision</h5>
-                        <p className="text-sm text-dark/50 leading-relaxed">{leader.vision}</p>
+                        <h5 className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-600/80 mb-3">Strategic Vision</h5>
+                        <p className="text-[15px] text-dark/70 leading-relaxed">{leader.vision}</p>
                     </div>
                     <div>
-                        <h5 className="text-[9px] font-black uppercase tracking-[0.35em] text-dark/30 mb-3">Core Focus</h5>
-                        <p className="text-sm text-dark/50 leading-relaxed">{leader.focus}</p>
+                        <h5 className="text-[10px] font-black uppercase tracking-[0.35em] text-dark/50 mb-3">Core Focus</h5>
+                        <p className="text-[15px] text-dark/70 leading-relaxed">{leader.focus}</p>
                     </div>
                 </div>
 

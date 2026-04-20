@@ -44,7 +44,7 @@ const entities = [
         img: "/image copy 4.png",
         desc: "Enabling a carbon-neutral future by developing the world’s greenest battery cell and intelligent green-tech infrastructure through AI, IoT, and Smart Automation.",
         pillars: ["ULTRON Energy Platform", "INTELLEXA AI", "Weighbridge AI", "REEWS Earthquake Warning"],
-        color: "text-emerald-500",
+        color: "text-gold",
         link: "https://rymgrenergy.com/",
         logo: "https://rymgrenergy.com/images/logo.png"
     },
@@ -147,7 +147,7 @@ export default function Portfolio() {
 
                                     {/* Center Logo Area */}
                                     <div className="relative z-10 flex flex-col items-center justify-center flex-grow group-hover:scale-105 transition-transform duration-1000">
-                                        <div className="relative w-52 md:w-64 h-16 mb-4 filter drop-shadow-xl">
+                                        <div className="relative w-64 md:w-80 h-32 md:h-40 mb-4 filter drop-shadow-xl">
                                             <Image src="/logo.png" alt="RiseMate Venture" fill className="object-contain" />
                                         </div>
                                         <p className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30">Master Holding Company</p>

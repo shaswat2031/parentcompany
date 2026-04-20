@@ -196,21 +196,36 @@ export default function About() {
                                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                     whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                                    viewport={{ once: false, amount: 0.2 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="group p-12 bg-[#f8f9fa] border border-transparent hover:border-dark/5 hover:bg-white hover:shadow-2xl transition-all duration-700 rounded-[40px]"
+                                    viewport={{ once: true, amount: 0.1 }}
+                                    transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                    className="group relative h-[380px] lg:h-[420px] bg-[#f8f9fa] border border-dark/5 hover:border-blue-600/10 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-[40px] overflow-hidden cursor-pointer flex flex-col"
                                 >
-                                    <div className="flex items-center justify-between gap-4 mb-6">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-600/50 block">Entity 0{idx + 1}</span>
+                                    {/* Top bar with Entity Number & Logo */}
+                                    <div className="flex items-center justify-between p-10 pb-0 z-10">
+                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 block group-hover:text-blue-600 transition-colors duration-500">Entity 0{idx + 1}</span>
                                         {entity.logo && (
-                                            <div className={`w-12 h-12 ${entity.name === 'Synchronous' ? 'bg-zinc-950' : 'bg-white'} rounded-lg p-2 border border-dark/5 shadow-sm overflow-hidden flex items-center justify-center`}>
-                                                <Image src={entity.logo} alt={entity.name} width={32} height={32} className="object-contain" unoptimized={true} />
+                                            <div className={`w-16 h-16 ${entity.name === 'Synchronous' ? 'bg-zinc-950' : 'bg-white'} rounded-full p-2 border border-dark/5 shadow-sm overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-500`}>
+                                                <Image src={entity.logo} alt={entity.name} width={44} height={44} className="object-contain" unoptimized={true} />
                                             </div>
                                         )}
                                     </div>
-                                    <h4 className="text-3xl font-black text-dark mb-4">{entity.name}</h4>
-                                    <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-8">{entity.sector}</p>
-                                    <p className="text-[11px] text-dark/60 font-secondary leading-relaxed border-t border-dark/5 pt-8">{entity.desc}</p>
+
+                                    {/* Content container that slides up */}
+                                    <div className="p-10 pt-6 flex flex-col h-full justify-end transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[120px] lg:group-hover:-translate-y-[140px] z-10 relative">
+                                        <h4 className="text-3xl font-black text-dark mb-3 lg:mb-4">{entity.name}</h4>
+                                        <p className="text-[10px] sm:text-xs font-bold text-blue-600 uppercase tracking-widest">{entity.sector}</p>
+                                    </div>
+
+                                    {/* Absolute details that fade & slide in from bottom */}
+                                    <div className="absolute bottom-0 left-0 w-full p-10 pt-0 opacity-0 translate-y-12 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-20 pointer-events-none">
+                                        <div className="w-8 h-[2px] bg-blue-600/30 mb-5 group-hover:w-16 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                                        <p className="text-[11px] lg:text-xs text-dark/70 font-secondary leading-relaxed w-[95%]">
+                                            {entity.desc}
+                                        </p>
+                                    </div>
+                                    
+                                    {/* Subtle decorative background gradient on hover */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-blue-50/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                                 </motion.div>
                             ))}
                         </div>
