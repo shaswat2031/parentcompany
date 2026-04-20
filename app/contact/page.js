@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 
 const ContactOrbit = () => (
     <div className="relative w-full aspect-square max-w-[550px] mx-auto flex justify-center items-center group">
@@ -56,11 +57,11 @@ const ContactOrbit = () => (
             <div className="absolute inset-0 bg-white/40 backdrop-blur-xl border border-white shadow-[0_20px_50px_-10px_rgba(0,35,102,0.1)] rounded-full flex flex-col items-center justify-center p-6 group-hover:scale-105 transition-all duration-700 z-10">
                 <div className="absolute inset-2 border-[1px] border-dashed border-[#002366]/10 rounded-full animate-[spin_60s_linear_infinite]"></div>
                 
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#002366] to-blue-800 text-white flex items-center justify-center mb-4 shadow-lg group-hover:-translate-y-1 transition-transform duration-500">
-                    <span className="material-symbols-outlined text-2xl font-light">language</span>
+                <div className="w-20 h-20 rounded-[1.2rem] bg-gradient-to-br from-[#002366] to-blue-800 text-white flex items-center justify-center mb-4 shadow-xl group-hover:-translate-y-1 transition-transform duration-500">
+                    <span className="material-symbols-outlined text-4xl font-light">language</span>
                 </div>
                 
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#002366]/40 mb-1">Global</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#002366]/40 mb-1 mt-2">Global</span>
                 <span className="text-xl font-black text-[#002366] tracking-tight">Nexus</span>
                 
                 <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white px-4 py-1.5 rounded-full border border-dark/5 shadow-sm flex items-center gap-2 text-xs font-bold text-dark whitespace-nowrap">
@@ -105,7 +106,7 @@ const fadeInUp = {
     transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
 };
 
-const ContactCard = ({ title, email, phone, icon, refLabel, accent, objectPos }) => (
+const ContactCard = ({ title, email, phone, logo, refLabel, accent }) => (
     <motion.div
         variants={fadeInUp}
         initial="initial"
@@ -117,8 +118,8 @@ const ContactCard = ({ title, email, phone, icon, refLabel, accent, objectPos })
 
         <div className="relative z-10">
             <div className="flex items-start mb-10">
-                <div className={`w-14 h-14 bg-white shadow-xl rounded-2xl flex items-center justify-center group-hover:bg-dark group-hover:text-white transition-all duration-700`}>
-                    <span className={`material-symbols-outlined text-2xl ${accent.replace('bg-', 'text-')} group-hover:text-white transition-colors duration-700`}>{icon}</span>
+                <div className="w-14 h-14 bg-white shadow-xl rounded-2xl flex items-center justify-center group-hover:-translate-y-1 transition-all duration-500 overflow-hidden border border-dark/5">
+                    {logo && <Image src={logo} alt={title} width={40} height={40} className="object-contain" unoptimized={true} />}
                 </div>
             </div>
             <div className="mb-6">
@@ -200,37 +201,33 @@ export default function Contact() {
                                 title="BWorth Support"
                                 email="info@bworth.co.in"
                                 phone="+91 8826668050"
-                                icon="eco"
+                                logo="/BWORTH.jpg"
                                 refLabel="Industrial Synthesis"
                                 accent="bg-cyan-600"
-                                objectPos="object-left-top"
                             />
                             <ContactCard
                                 title="Vega Vrudhi"
                                 email="saurabh@vegavruddhi.com"
                                 phone="+91 91166 16636"
-                                icon="precision_manufacturing"
+                                logo="/VEGA.png"
                                 refLabel="Execution Framework"
                                 accent="bg-green-600"
-                                objectPos="object-right-top"
                             />
                             <ContactCard
                                 title="RYM Grenergy"
                                 email="contact@rym-grenergy.com"
                                 phone="+91 82000 55645"
-                                icon="bolt"
+                                logo="https://rymgrenergy.com/images/logo.png"
                                 refLabel="Energy Sovereignty"
-                                accent="bg-emerald-500"
-                                objectPos="object-left-bottom"
+                                accent="bg-gold"
                             />
                             <ContactCard
                                 title="Synchronous"
-                                email="ops@synchronous.digital"
+                                email="biz@synchronousbuilddigital.com"
                                 phone="Global Access"
-                                icon="hub"
+                                logo="/sync.jpg"
                                 refLabel="Digital Architecture"
                                 accent="bg-orange-500"
-                                objectPos="object-right-bottom"
                             />
                         </div>
                     </div>

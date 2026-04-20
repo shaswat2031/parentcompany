@@ -370,9 +370,9 @@ const FounderCard = ({ founder, isSmall }) => {
             <div className={`${isSmall ? 'p-6' : 'p-8 md:p-10'} flex flex-col flex-grow`}>
                 {/* Operational Mandate */}
                 <div className={`${isSmall ? 'mb-4' : 'mb-8'}`}>
-                    <h5 className="text-[8px] font-black uppercase tracking-[0.35em] text-dark/25 mb-4 uppercase">Operational Mandate</h5>
+                    <h5 className="text-[10px] font-black uppercase tracking-[0.35em] text-dark/40 mb-4 uppercase">Operational Mandate</h5>
                     <div className="border-l-2 border-blue-600/30 pl-5">
-                        <p className={`${isSmall ? 'text-xs' : 'text-sm md:text-[15px]'} text-dark/70 font-medium leading-relaxed italic`}>
+                        <p className={`${isSmall ? 'text-sm' : 'text-base md:text-[16px]'} text-dark/80 font-medium leading-relaxed italic`}>
                             "{founder.philosophy}"
                         </p>
                     </div>
@@ -380,12 +380,12 @@ const FounderCard = ({ founder, isSmall }) => {
 
                 <div className={`mt-auto pt-8 border-t border-dark/5 grid ${isSmall ? 'grid-cols-1 gap-4' : 'grid-cols-2 gap-6'}`}>
                     <div>
-                        <h5 className="text-[8px] font-black uppercase tracking-[0.35em] text-dark/25 mb-3 uppercase">Strategic Vision</h5>
-                        <p className={`text-[11px] text-dark/45 leading-relaxed ${isSmall ? 'line-clamp-2' : 'line-clamp-3'}`}>{founder.vision}</p>
+                        <h5 className="text-[10px] font-black uppercase tracking-[0.35em] text-dark/40 mb-3 uppercase">Strategic Vision</h5>
+                        <p className={`text-[13px] text-dark/60 leading-relaxed ${isSmall ? 'line-clamp-2' : 'line-clamp-3'}`}>{founder.vision}</p>
                     </div>
                     <div>
-                        <h5 className="text-[8px] font-black uppercase tracking-[0.35em] text-dark/25 mb-3 uppercase">Core Focus</h5>
-                        <p className={`text-[11px] text-dark/45 leading-relaxed ${isSmall ? 'line-clamp-2' : 'line-clamp-3'}`}>{founder.focus}</p>
+                        <h5 className="text-[10px] font-black uppercase tracking-[0.35em] text-dark/40 mb-3 uppercase">Core Focus</h5>
+                        <p className={`text-[13px] text-dark/60 leading-relaxed ${isSmall ? 'line-clamp-2' : 'line-clamp-3'}`}>{founder.focus}</p>
                     </div>
                 </div>
             </div>
@@ -890,32 +890,28 @@ export default function Home() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-32">
                             {[
                                 {
-                                    name: "BWorth Support", icon: "eco",
+                                    name: "BWorth Support", logo: "/BWORTH.jpg",
                                     email: "info@bworth.co.in", phone: "+91 8826668050",
                                     ref: "Industrial Synthesis",
-                                    color: "text-cyan-600",
-                                    hoverBg: "group-hover:bg-cyan-600"
+                                    color: "text-cyan-600"
                                 },
                                 {
-                                    name: "Vega Vrudhi", icon: "precision_manufacturing",
+                                    name: "Vega Vrudhi", logo: "/VEGA.png",
                                     email: "saurabh@vegavruddhi.com", phone: "+91 91166 16636",
                                     ref: "Execution Framework",
-                                    color: "text-green-600",
-                                    hoverBg: "group-hover:bg-green-600"
+                                    color: "text-green-600"
                                 },
                                 {
-                                    name: "RYM Grenergy", icon: "bolt",
+                                    name: "RYM Grenergy", logo: "https://rymgrenergy.com/images/logo.png",
                                     email: "contact@rym-grenergy.com", phone: "+91 82000 55645",
                                     ref: "Energy Sovereignty",
-                                    color: "text-emerald-500",
-                                    hoverBg: "group-hover:bg-emerald-500"
+                                    color: "text-gold"
                                 },
                                 {
-                                    name: "Synchronous", icon: "hub",
-                                    email: "ops@synchronous.digital", phone: "Global",
+                                    name: "Synchronous", logo: "/sync.jpg",
+                                    email: "biz@synchronousbuilddigital.com", phone: "Global",
                                     ref: "Digital Architecture",
-                                    color: "text-orange-500",
-                                    hoverBg: "group-hover:bg-orange-500"
+                                    color: "text-orange-500"
                                 }
                             ].map((entity, i) => (
                                 <motion.div
@@ -924,8 +920,8 @@ export default function Home() {
                                     whileHover={{ y: -10 }}
                                     className="group p-10 bg-[#f8faff] rounded-[40px] border border-[#002366]/5 hover:border-[#002366]/20 transition-all duration-700"
                                 >
-                                    <div className={`w-14 h-14 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-10 ${entity.hoverBg} group-hover:text-white transition-all duration-700`}>
-                                        <span className={`material-symbols-outlined text-2xl ${entity.color} group-hover:text-white transition-colors duration-700`}>{entity.icon}</span>
+                                    <div className="w-14 h-14 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-10 group-hover:-translate-y-1 transition-all duration-500 overflow-hidden border border-dark/5">
+                                        {entity.logo && <Image src={entity.logo} alt={entity.name} width={40} height={40} className="object-contain" unoptimized={true} />}
                                     </div>
                                     <div className="mb-8">
                                         <p className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-2">{entity.ref}</p>
