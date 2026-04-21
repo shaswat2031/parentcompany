@@ -61,7 +61,7 @@ export default function Navbar() {
             <span className={`text-lg font-black tracking-tighter transition-colors duration-300 md:text-2xl ${scrolled ? "text-[#002366]" : "text-dark"}`}>
               Risemate
             </span>
-            <div className={`relative h-7 w-7 transition-transform duration-300 md:h-8 md:w-8 ${scrolled ? "scale-90" : "scale-100"}`}>
+            <div className={`relative h-10 w-10 transition-transform duration-300 md:h-12 md:w-12 ${scrolled ? "scale-90" : "scale-100"}`}>
               <Image
                 src="/logo.png"
                 alt="RISEMATE Logo"

@@ -170,25 +170,41 @@ export default function About() {
                                     name: "BWorth",
                                     sector: "Sustainable Fashion",
                                     desc: "Revolutionizing the fashion industry through a unique circular luxury ecosystem. Buy, sell, and recycle fashion while earning rewards through our unique buyback program that preserves the planet's beauty.",
-                                    logo: "/BWORTH.jpg"
+                                    logo: "/BWORTH.jpg",
+                                    textColor: "text-cyan-600",
+                                    hoverTextColor: "group-hover:text-cyan-600",
+                                    lineColor: "bg-cyan-600/30",
+                                    gradientColor: "from-cyan-50/80"
                                 },
                                 {
                                     name: "Vega Vrudhi",
                                     sector: "Execution Architecture",
                                     desc: "Precision execution architecture bridging the gap between digital leads and on-ground reality. We deploy trained field teams to accelerate market presence for national growth engines.",
-                                    logo: "/VEGA.png"
+                                    logo: "/VEGA.png",
+                                    textColor: "text-green-600",
+                                    hoverTextColor: "group-hover:text-green-600",
+                                    lineColor: "bg-green-600/30",
+                                    gradientColor: "from-green-50/80"
                                 },
                                 {
                                     name: "RYM Grenergy",
                                     sector: "Deep-Tech",
                                     desc: "Enabling a carbon-neutral future by developing the world’s greenest battery cell and intelligent green-tech infrastructure through AI, IoT, and Smart Automation.",
-                                    logo: "https://rymgrenergy.com/_next/image?url=%2Fimages%2Flogo.png&w=128&q=75"
+                                    logo: "https://rymgrenergy.com/_next/image?url=%2Fimages%2Flogo.png&w=128&q=75",
+                                    textColor: "text-[#C9A84C]",
+                                    hoverTextColor: "group-hover:text-[#C9A84C]",
+                                    lineColor: "bg-[#C9A84C]/30",
+                                    gradientColor: "from-[#C9A84C]/10"
                                 },
                                 {
                                     name: "Synchronous",
                                     sector: "Digital Marketing",
                                     desc: "Architecting high-velocity digital ecosystems for high-growth elite brands. We build vertically integrated brand identities and compound ROI via algorithmic process automation.",
-                                    logo: "/sync.jpg"
+                                    logo: "/sync.jpg",
+                                    textColor: "text-orange-500",
+                                    hoverTextColor: "group-hover:text-orange-500",
+                                    lineColor: "bg-orange-500/30",
+                                    gradientColor: "from-orange-50/80"
                                 }
                             ].map((entity, idx) => (
                                 <motion.div
@@ -198,11 +214,11 @@ export default function About() {
                                     exit={{ opacity: 0, scale: 0.95, y: 20 }}
                                     viewport={{ once: true, amount: 0.1 }}
                                     transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                    className="group relative h-[380px] lg:h-[420px] bg-[#f8f9fa] border border-dark/5 hover:border-blue-600/10 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-[40px] overflow-hidden cursor-pointer flex flex-col"
+                                    className="group relative h-[380px] lg:h-[420px] bg-[#f8f9fa] border border-dark/5 hover:border-blue-600/10 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-[40px] overflow-hidden flex flex-col"
                                 >
                                     {/* Top bar with Entity Number & Logo */}
                                     <div className="flex items-center justify-between p-10 pb-0 z-10">
-                                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 block group-hover:text-blue-600 transition-colors duration-500">Entity 0{idx + 1}</span>
+                                        <span className={`text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 block ${entity.hoverTextColor} transition-colors duration-500`}>Entity 0{idx + 1}</span>
                                         {entity.logo && (
                                             <div className={`w-16 h-16 ${entity.name === 'Synchronous' ? 'bg-zinc-950' : 'bg-white'} rounded-full p-2 border border-dark/5 shadow-sm overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-500`}>
                                                 <Image src={entity.logo} alt={entity.name} width={44} height={44} className="object-contain" unoptimized={true} />
@@ -213,19 +229,19 @@ export default function About() {
                                     {/* Content container that slides up */}
                                     <div className="p-10 pt-6 flex flex-col h-full justify-end transform transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[120px] lg:group-hover:-translate-y-[140px] z-10 relative">
                                         <h4 className="text-3xl font-black text-dark mb-3 lg:mb-4">{entity.name}</h4>
-                                        <p className="text-[10px] sm:text-xs font-bold text-blue-600 uppercase tracking-widest">{entity.sector}</p>
+                                        <p className={`text-[10px] sm:text-xs font-bold ${entity.textColor} uppercase tracking-widest`}>{entity.sector}</p>
                                     </div>
 
                                     {/* Absolute details that fade & slide in from bottom */}
                                     <div className="absolute bottom-0 left-0 w-full p-10 pt-0 opacity-0 translate-y-12 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] z-20 pointer-events-none">
-                                        <div className="w-8 h-[2px] bg-blue-600/30 mb-5 group-hover:w-16 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                                        <div className={`w-8 h-[2px] ${entity.lineColor} mb-5 group-hover:w-16 transition-all duration-700 delay-100 ease-[cubic-bezier(0.16,1,0.3,1)]`} />
                                         <p className="text-[11px] lg:text-xs text-dark/70 font-secondary leading-relaxed w-[95%]">
                                             {entity.desc}
                                         </p>
                                     </div>
                                     
                                     {/* Subtle decorative background gradient on hover */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-blue-50/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                    <div className={`absolute inset-0 bg-gradient-to-t ${entity.gradientColor} to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
                                 </motion.div>
                             ))}
                         </div>

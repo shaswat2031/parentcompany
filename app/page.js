@@ -475,7 +475,7 @@ const portfolioItems = [
     },
     {
         title: "Synchronous",
-        img: "/image copy 3.png",
+        img: "/image copy 5.png",
         objectPos: "object-right",
         desc: "Synthesizing brand identity with autonomous agent intelligence to create compound ROI for institutional-grade brands. We build the digital nexus where aesthetics meet algorithmic precision.",
         tag: "Autonomous AI",
@@ -893,41 +893,56 @@ export default function Home() {
                                     name: "BWorth Support", logo: "/BWORTH.jpg",
                                     email: "info@bworth.co.in", phone: "+91 8826668050",
                                     ref: "Industrial Synthesis",
-                                    color: "text-cyan-600"
+                                    color: "text-cyan-600",
+                                    bgLightColor: "bg-cyan-50",
+                                    bgGlowColor: "bg-cyan-600",
+                                    link: "https://bworth.co.in"
                                 },
                                 {
                                     name: "Vega Vrudhi", logo: "/VEGA.png",
                                     email: "saurabh@vegavruddhi.com", phone: "+91 91166 16636",
                                     ref: "Execution Framework",
-                                    color: "text-green-600"
+                                    color: "text-green-600",
+                                    bgLightColor: "bg-green-50",
+                                    bgGlowColor: "bg-green-600",
+                                    link: "https://vegavruddhi.com"
                                 },
                                 {
                                     name: "RYM Grenergy", logo: "https://rymgrenergy.com/images/logo.png",
                                     email: "contact@rym-grenergy.com", phone: "+91 82000 55645",
                                     ref: "Energy Sovereignty",
-                                    color: "text-gold"
+                                    color: "text-[#C9A84C]",
+                                    bgLightColor: "bg-[#C9A84C]/10",
+                                    bgGlowColor: "bg-[#C9A84C]",
+                                    link: "https://rymgrenergy.com/"
                                 },
                                 {
                                     name: "Synchronous", logo: "/sync.jpg",
                                     email: "biz@synchronousbuilddigital.com", phone: "Global",
                                     ref: "Digital Architecture",
-                                    color: "text-orange-500"
+                                    color: "text-orange-500",
+                                    bgLightColor: "bg-orange-50",
+                                    bgGlowColor: "bg-orange-500",
+                                    link: "https://www.synchronousbuilddigital.com/"
                                 }
                             ].map((entity, i) => (
                                 <motion.div
                                     key={i}
                                     variants={fadeInUp}
-                                    whileHover={{ y: -10 }}
-                                    className="group p-10 bg-[#f8faff] rounded-[40px] border border-[#002366]/5 hover:border-[#002366]/20 transition-all duration-700"
+                                    onClick={() => window.open(entity.link, '_blank')}
+                                    className={`group relative p-10 ${entity.bgLightColor} rounded-[40px] border border-dark/5 hover:border-dark/10 hover:shadow-[0_45px_90px_-20px_rgba(0,35,102,0.08)] transition-all duration-700 cursor-pointer overflow-hidden`}
                                 >
-                                    <div className="w-14 h-14 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-10 group-hover:-translate-y-1 transition-all duration-500 overflow-hidden border border-dark/5">
+                                    {/* Subtle Entity Accent Glow */}
+                                    <div className={`absolute -top-10 -right-10 w-24 h-24 blur-3xl opacity-0 hover:opacity-20 transition-opacity duration-1000 ${entity.bgGlowColor}`} />
+
+                                    <div className="relative z-10 w-14 h-14 rounded-2xl bg-white shadow-xl flex items-center justify-center mb-10 group-hover:-translate-y-1 transition-all duration-500 overflow-hidden border border-dark/5">
                                         {entity.logo && <Image src={entity.logo} alt={entity.name} width={40} height={40} className="object-contain" unoptimized={true} />}
                                     </div>
-                                    <div className="mb-8">
+                                    <div className="relative z-10 mb-8">
                                         <p className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-2">{entity.ref}</p>
                                         <h3 className={`text-2xl font-black ${entity.color} tracking-tight`}>{entity.name}</h3>
                                     </div>
-                                    <div className="space-y-2">
+                                    <div className="relative z-10 space-y-2">
                                         <p className="text-sm font-bold text-dark/60 hover:text-dark transition-colors">{entity.email}</p>
                                         <p className={`text-xs font-black uppercase tracking-widest ${entity.color}`}>{entity.phone}</p>
                                     </div>

@@ -106,15 +106,16 @@ const fadeInUp = {
     transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
 };
 
-const ContactCard = ({ title, email, phone, logo, refLabel, accent }) => (
+const ContactCard = ({ title, email, phone, logo, refLabel, textColor, bgLightColor, bgGlowColor, link }) => (
     <motion.div
         variants={fadeInUp}
         initial="initial"
         whileInView="whileInView"
-        className="relative p-10 bg-white border border-dark/5 rounded-[40px] hover:border-[#002366]/20 hover:shadow-[0_45px_90px_-20px_rgba(0,35,102,0.08)] transition-all duration-700 group overflow-hidden"
+        onClick={link ? () => window.open(link, '_blank') : undefined}
+        className={`relative p-10 ${bgLightColor} border border-dark/5 rounded-[40px] hover:border-dark/10 hover:shadow-[0_45px_90px_-20px_rgba(0,35,102,0.08)] transition-all duration-700 group overflow-hidden ${link ? 'cursor-pointer' : ''}`}
     >
         {/* Subtle Entity Accent Glow */}
-        <div className={`absolute -top-10 -right-10 w-24 h-24 blur-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-1000 ${accent}`} />
+        <div className={`absolute -top-10 -right-10 w-24 h-24 blur-3xl opacity-0 hover:opacity-20 transition-opacity duration-1000 ${bgGlowColor}`} />
 
         <div className="relative z-10">
             <div className="flex items-start mb-10">
@@ -124,13 +125,13 @@ const ContactCard = ({ title, email, phone, logo, refLabel, accent }) => (
             </div>
             <div className="mb-6">
                 <p className="text-[10px] font-black uppercase tracking-[0.45em] text-dark/30 mb-2">{refLabel}</p>
-                <h3 className={`text-2xl font-black ${accent.replace('bg-', 'text-')} tracking-tighter`}>{title}</h3>
+                <h3 className={`text-2xl font-black ${textColor} tracking-tighter`}>{title}</h3>
             </div>
             <div className="space-y-3">
                 <a href={`mailto:${email}`} className="block text-sm font-bold text-dark/70 hover:text-dark transition-colors">{email}</a>
                 {phone && (
-                    <p className={`text-[10px] font-black uppercase tracking-widest ${accent.replace('bg-', 'text-')} flex items-center gap-2`}>
-                        <span className={`w-1 h-1 rounded-full ${accent} animate-pulse`}></span>
+                    <p className={`text-[10px] font-black uppercase tracking-widest ${textColor} flex items-center gap-2`}>
+                        <span className={`w-1 h-1 rounded-full ${bgGlowColor} animate-pulse`}></span>
                         {phone}
                     </p>
                 )}
@@ -203,7 +204,10 @@ export default function Contact() {
                                 phone="+91 8826668050"
                                 logo="/BWORTH.jpg"
                                 refLabel="Industrial Synthesis"
-                                accent="bg-cyan-600"
+                                textColor="text-cyan-600"
+                                bgLightColor="bg-cyan-50"
+                                bgGlowColor="bg-cyan-600"
+                                link="https://bworth.co.in"
                             />
                             <ContactCard
                                 title="Vega Vrudhi"
@@ -211,7 +215,10 @@ export default function Contact() {
                                 phone="+91 91166 16636"
                                 logo="/VEGA.png"
                                 refLabel="Execution Framework"
-                                accent="bg-green-600"
+                                textColor="text-green-600"
+                                bgLightColor="bg-green-50"
+                                bgGlowColor="bg-green-600"
+                                link="https://vegavruddhi.com"
                             />
                             <ContactCard
                                 title="RYM Grenergy"
@@ -219,7 +226,10 @@ export default function Contact() {
                                 phone="+91 82000 55645"
                                 logo="https://rymgrenergy.com/images/logo.png"
                                 refLabel="Energy Sovereignty"
-                                accent="bg-gold"
+                                textColor="text-[#C9A84C]"
+                                bgLightColor="bg-[#C9A84C]/10"
+                                bgGlowColor="bg-[#C9A84C]"
+                                link="https://rymgrenergy.com/"
                             />
                             <ContactCard
                                 title="Synchronous"
@@ -227,7 +237,10 @@ export default function Contact() {
                                 phone="Global Access"
                                 logo="/sync.jpg"
                                 refLabel="Digital Architecture"
-                                accent="bg-orange-500"
+                                textColor="text-orange-500"
+                                bgLightColor="bg-orange-50"
+                                bgGlowColor="bg-orange-500"
+                                link="https://www.synchronousbuilddigital.com/"
                             />
                         </div>
                     </div>

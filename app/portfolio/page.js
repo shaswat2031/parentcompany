@@ -53,7 +53,7 @@ const entities = [
         name: "Synchronous",
         tagline: "High-Performance Digital Marketing Group",
         tag: "Autonomous AI",
-        img: "/image copy 3.png",
+        img: "/image copy 5.png",
         objectPos: "object-right",
         desc: "Architecting high-velocity digital ecosystems for high-growth elite brands. We build vertically integrated brand identities and compound ROI via algorithmic process automation.",
         pillars: ["Brand Identity Architecture", "Autonomous AI Agents", "Data-Backed Growth", "Predictive Modeling"],
